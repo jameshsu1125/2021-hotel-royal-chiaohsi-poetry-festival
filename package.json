@@ -1,7 +1,7 @@
 {
-	"name": "-----------",
-	"description": "-----------",
-	"homepage": "-----------",
+	"name": "2021-hotel-royal-chiaohsi-poetry-festival",
+	"description": "2021 老爺詩歌集:道別與鹽",
+	"homepage": "https://jameshsu1125.github.io/2021-hotel-royal-chiaohsi-poetry-festival/",
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
@@ -36,6 +36,8 @@
 		"babel-plugin-react-html-attrs": "^2.1.0",
 		"css-loader": "^2.0.1",
 		"file-loader": "^2.0.0",
+		"glslify": "^7.1.1",
+		"glslify-loader": "^2.0.0",
 		"less": "^3.9.0",
 		"less-loader": "^4.1.0",
 		"postcss": "^7.0.7",
@@ -55,19 +57,25 @@
 		"dat.gui": "^0.7.3",
 		"exif-js": "^2.3.0",
 		"gh-pages": "^3.1.0",
+		"glsl-easings": "^1.0.0",
+		"glsl-noise": "0.0.0",
+		"glslify-import-loader": "^0.1.2",
+		"gsap": "^3.5.1",
 		"howler": "^2.1.1",
 		"jquery": "^3.5.0",
 		"jquery-easing": "0.0.1",
 		"jquery.waitforimages": "^2.4.0",
-		"lesca": "^0.1.21",
+		"lesca": "^0.1.22",
 		"mouse-wheel": "^1.2.0",
 		"popper.js": "^1.14.6",
+		"raw-loader": "^4.0.2",
 		"react": "^16.6.3",
 		"react-animate-on-scroll": "^2.1.5",
 		"react-dom": "^16.6.3",
 		"react-html-parser": "^2.0.2",
 		"react-slick": "^0.26.1",
 		"slick-carousel": "^1.8.1",
-		"sweetalert": "^2.1.2"
+		"sweetalert": "^2.1.2",
+		"three": "^0.123.0"
 	}
 }

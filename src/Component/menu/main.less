@@ -1,0 +1,68 @@
+@r: 0.15;
+#menu {
+	position: absolute;
+	top: 0;
+
+	.menu {
+		position: absolute;
+		@img: './img/ico.svg';
+		background-image: url(@img);
+		width: image-width(@img) * @r;
+		height: image-height(@img) * @r;
+		background-size: 100%;
+		opacity: 0.8;
+		top: 35px;
+		left: 35px;
+	}
+
+	.content {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		overflow-y: scroll;
+
+		.loop(@n, @l:1) when (@l <= @n) {
+			&:nth-child(@{l}) {
+				background: rgba(0, 0, 0, 0) url('./img/bg/@{l}.jpg') no-repeat scroll center center / cover;
+				& > div:nth-child(1) {
+					background-image: url('./img/txt/@{l}.png');
+				}
+			}
+			.loop(@n,(@l+1));
+		}
+
+		& > div {
+			.loop(14);
+
+			position: relative;
+			width: 100%;
+			height: 100% / 7;
+
+			.txt {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				background-repeat: no-repeat;
+				background-position: calc(~'50% - 0px') center;
+				pointer-events: none;
+			}
+
+			.readed {
+				position: absolute;
+				@img: './img/readed.png';
+				background-image: url(@img);
+				width: image-width(@img);
+				height: image-height(@img);
+				left: 50%;
+				bottom: 10%;
+				margin-left: image-width(@img) / -2;
+				display: none;
+				pointer-events: none;
+				opacity: 0;
+			}
+		}
+	}
+}
