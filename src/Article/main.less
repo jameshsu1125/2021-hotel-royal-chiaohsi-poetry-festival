@@ -1,0 +1,56 @@
+#article {
+	position: relative;
+	width: 100%;
+	height: auto;
+	padding: 338px 145px 145px 145px;
+	box-sizing: border-box;
+
+	overflow: hidden;
+
+	.row {
+		position: relative;
+		float: left;
+		width: 100%;
+		height: auto;
+		background-repeat: no-repeat;
+		background-position: center;
+		color: #fff;
+		pointer-events: none;
+
+		font-size: 38px;
+
+		p {
+			line-height: 70px;
+		}
+
+		&:last-child {
+			padding-bottom: 100px;
+		}
+	}
+
+	.block {
+		line-height: 70px;
+
+		& > div {
+			position: absolute;
+		}
+	}
+
+	.sub {
+		font-family: 'Microsoft JhengHei', '微軟正黑體', Arial, Helvetica, sans-serif;
+		text-align: center;
+		font-size: 50px;
+		transform: scale(1, 0.8);
+		padding-bottom: 80px;
+	}
+
+	.title {
+		font-family: '游明朝体', 'Yu Mincho', YuMincho, 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'MS P明朝', 'MS PMincho', serif;
+		margin-top: 0px;
+		text-align: center;
+		color: #fff;
+		font-size: 90px;
+		transform: scale(1, 0.8);
+		margin-bottom: -15px;
+	}
+}

@@ -39,7 +39,9 @@ export default class content extends React.Component {
 				this.btn.in();
 			},
 			out() {
+				TouchEvent.remove('.btn-container');
 				root.props.enter();
+
 				$(this)
 					.delay(500)
 					.animate(
@@ -100,7 +102,7 @@ export default class content extends React.Component {
 				},
 				evt() {
 					TouchEvent.add('.btn-container', () => {
-						if (UserAgent.get() === 'mobile' && window.location.protocol === 'https') {
+						if (UserAgent.get() == 'mobile' && window.location.protocol == 'https') {
 							Motion.init({
 								callback: (e) => {
 									Motion.distory();

@@ -1,68 +1,98 @@
 import React from 'react';
 import './main.less';
-import './article.less';
+import './headline.less';
 
-import Article from './article';
-import Canvas3D from './../Canvas3d/main';
+import Headline from './headline';
+import Article from './../Article/main';
 
 import Data from './data';
+
+import $ from 'jquery';
+require('jquery-easing');
 
 export default class poetry extends React.Component {
 	constructor(props) {
 		super(props);
-		this.canvas3D = new Canvas3D();
-		this.canvas3D.particles.faded = () => this.addTouchEvent();
+		const root = this;
+		this.state = { article: Data[this.props.index] };
+		this.tr = {
+			init() {
+				this.bg.init();
+			},
+			in() {
+				this.bg.in();
+			},
+			bg: {
+				o: 0,
+				time: 1000,
+				init() {
+					this.c = $(root.refs.bg);
+					this.tran();
+				},
+				in() {
+					$(this).animate(
+						{ o: 1 },
+						{
+							duration: this.time,
+							step: () => this.tran(),
+							complete: () => this.tran(),
+							easing: 'easeOutQuart',
+						}
+					);
+				},
+				blur() {
+					this.c.addClass('blur');
+				},
+				tran() {
+					this.c.css('opacity', this.o);
+				},
+			},
+		};
 	}
 
-	removeTouchEvent() {
-		TouchEvent.remove('.touch');
-		this.refs.touch.removeEventListener('touchmove', this.move);
-		document.removeEventListener('touchend', this.end);
-		this.refs.touch.style.display = 'none';
-	}
-
-	addTouchEvent() {
-		this.refs.article.add_arrow();
-
-		let pxy;
-		TouchEvent.add('.touch', (e) => {
-			pxy = e.targetTouches[0];
-		});
-
-		this.move = (e) => {
-			if (!pxy) return;
-			let dy = pxy.clientY - e.targetTouches[0].clientY;
-			this.canvas3D.particles.update_uPy(dy);
-
-			if (dy > 300) {
-				this.removeTouchEvent();
-				this.canvas3D.particles.tween_uPy(5000, 'easeInOutExpo', 2000);
-				this.refs.article.scrollUp();
-			}
-		};
-
-		this.end = (e) => {
-			this.canvas3D.particles.tween_uPy();
-		};
-
-		this.refs.touch.addEventListener('touchmove', this.move, { passive: false });
-		document.addEventListener('touchend', this.end);
+	componentDidMount() {
+		this.tr.init();
 	}
 
 	in() {
+		$('html, body').scrollTop(0);
 		this.refs.main.style.display = 'block';
-		this.refs.article.in();
+		this.refs.headline.in();
+		this.tr.in();
+	}
+
+	update_uPy(dy) {
+		if (this.state.article) this.refs.headline.update_uPy(dy);
+	}
+
+	tween_uPy() {
+		if (this.state.article) this.refs.headline.tween_uPy();
+	}
+
+	scrollUp() {
+		this.refs.headline.scrollUp();
+		this.refs.article.scrollUp();
+		this.tr.bg.blur();
 	}
 
 	append_poetry() {
-		return <Article ref='article' canvas={this.canvas3D} data={Data[this.props.index]} />;
+		if (this.state.article) return <Headline ref='headline' canvas={this.props.canvas} data={this.state.article} index={this.props.index} />;
+	}
+
+	append_article() {
+		if (this.state.article) return <Article ref='article' data={this.state.article} index={this.props.index} />;
+	}
+
+	append_background() {
+		return <div ref='bg' className={'bg_' + this.props.index}></div>;
 	}
 
 	render() {
 		return (
 			<div ref='main' id='poetry'>
+				{this.append_background()}
 				{this.append_poetry()}
-				<div ref='touch' className='touch'></div>
+				{this.append_article()}
 			</div>
 		);
 	}

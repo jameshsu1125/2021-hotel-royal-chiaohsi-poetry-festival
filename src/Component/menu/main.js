@@ -19,6 +19,7 @@ export default class menu extends React.Component {
 				this.menu.init();
 			},
 			in() {
+				root.refs.main.style.display = 'block';
 				this.menu.in();
 			},
 			menu: {

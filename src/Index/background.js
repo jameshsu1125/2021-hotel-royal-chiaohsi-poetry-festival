@@ -20,7 +20,15 @@ export default class background extends React.Component {
 		//script
 	}
 
+	show() {
+		this.refs.main.style.display = 'block';
+	}
+
+	hide() {
+		this.refs.main.style.display = 'none';
+	}
+
 	render() {
-		return <div id='background'></div>;
+		return <div ref='main' id='background'></div>;
 	}
 }

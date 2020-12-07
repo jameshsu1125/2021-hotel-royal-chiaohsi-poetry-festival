@@ -25,13 +25,13 @@ void main() {
 	// circle
 	float border = 0.001;
 	float radius = 0.5;
-	float dist = radius - distance(uv, vec2(1.5));
+	float dist = radius - distance(uv, vec2(0.5));
 	float t = smoothstep(0.0, border, dist);
 
 	// final color
 	color = colB;
 	float nAlpha;
-	if(grey < 0.9) nAlpha = .0;
+	if(grey < 0.7) nAlpha = .0;
 	else nAlpha = uAlpha;
 	color.a = nAlpha;
 

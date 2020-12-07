@@ -27,8 +27,8 @@ uniform float uMaxTime;
 varying vec2 vPUv;
 varying vec2 vUv;
 
-#pragma glslify:snoise_1_2=require(glsl-noise/simplex/2d);
-#pragma glslify: ease = require(glsl-easings/quadratic-in);
+#pragma glslify: snoise_1_2 = require( glsl-noise/simplex/2d );
+#pragma glslify: ease = require( glsl-easings/quadratic-in );
 
 float random(float n){
 	return fract(sin(n)*43758.5453123);
@@ -50,7 +50,7 @@ void main(){
 
 	// center
 	displaced.x -= uTextureSize[0] * .5;
-	displaced.y -= uTextureSize[1] * .4;
+	displaced.y -= uTextureSize[1] * .5;
 	
 	// random
 	float rndz = snoise_1_2( vec2( pindex, uTime * uSpeed ) ) ;
@@ -65,14 +65,12 @@ void main(){
 	displaced.x += sin( rndz * 0.1 ) * layer * uPy;
 	// particle size
 	float psize = 1.0;
-	psize *= uSize;
-	
 	
 	
 	// final position
 	vec4 mvPosition = modelViewMatrix * vec4( displaced , 1.0 );
-	mvPosition.xyz += position*psize;
+	mvPosition.xyz += position * psize;
 	vec4 finalPosition = projectionMatrix * mvPosition;
 	
-	gl_Position=finalPosition;
+	gl_Position = finalPosition;
 }

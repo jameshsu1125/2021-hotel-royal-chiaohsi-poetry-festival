@@ -8,8 +8,7 @@ require('jquery-easing');
 module.exports = {
 	uniforms: {
 		uTime: { value: 0.0 },
-		uDepth: { value: 10.0 },
-		uSize: { value: 1.0 },
+		uDepth: { value: 5.0 },
 		uAlpha: { value: 0.0 },
 		uPy: { value: 0.0 },
 		uPx: { value: 0.0 },
@@ -34,23 +33,24 @@ module.exports = {
 			this.width = texture.image.width;
 			this.height = texture.image.height;
 			this.uniforms.uTextureSize = { value: new THREE.Vector2(this.width, this.height) };
-			this.uniforms.uTexture = { value: this.texture };
+			if (!this.uniforms.uTexture) this.uniforms.uTexture = { value: this.texture };
 			this.addPoints(img);
 		});
 		Scene.add(this.container);
 	},
 	addImg(img) {
 		const loader = new THREE.TextureLoader();
-		setTimeout(() => {
-			loader.load(img, (texture) => {
-				this.uniforms.uTexture.value = texture;
-				this.uniforms.uTextureSize.value = new THREE.Vector2(this.width, this.height);
-			});
-		}, 10);
+		//while (this.uniforms.uTexture) {
+		//	console.log(this.uniforms.uTexture);
+		loader.load(img, (texture) => {
+			if (this.uniforms.uTexture) this.uniforms.uTexture.value = texture;
+			if (!this.uniforms.uTexture) this.uniforms.uTextureSize.value = new THREE.Vector2(this.width, this.height);
+		});
+		//}
 	},
 	fadeIn() {
 		this.fade = true;
-		this.object3D.material.uniforms.uTime.value = 0.0;
+		if (this.object3D) this.object3D.material.uniforms.uTime.value = 0.0;
 		let time = 5000;
 		$(this.uniforms.uAlpha).animate({ value: 1.0 }, time / 2, 'swing');
 		$(this.uniforms.uPz).animate({ value: 0.0 }, time, 'easeInExpo');
@@ -154,7 +154,7 @@ module.exports = {
 		if (!this.object3D) return;
 		let r;
 		if (Device.get() == 'desktop') r = 0.00095;
-		else r = 0.0006;
+		else r = 0.001;
 		const s = window.innerHeight * r;
 		this.object3D.scale.set(s, s, s);
 	},

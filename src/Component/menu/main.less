@@ -1,7 +1,8 @@
 @r: 0.15;
 #menu {
-	position: absolute;
+	position: fixed;
 	top: 0;
+	display: none;
 
 	.menu {
 		position: absolute;
@@ -22,6 +23,7 @@
 		width: 100%;
 		height: 100%;
 		overflow-y: scroll;
+		overflow-x: hidden;
 
 		.loop(@n, @l:1) when (@l <= @n) {
 			&:nth-child(@{l}) {

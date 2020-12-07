@@ -6,8 +6,9 @@ module.exports = {
 			this.index++;
 
 			if (this.index >= this.max) {
-				console.log(this.index, this.max);
 				this.end();
+			} else if (this.index > this.max) {
+				console.log(this.index, this.max);
 			}
 			return (this.index / this.max) * 100;
 		},

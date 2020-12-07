@@ -115,10 +115,6 @@ export default class loading extends React.Component {
 		this.tr.bar.set(p);
 	}
 
-	componentWillUnmount() {
-		//script
-	}
-
 	render() {
 		return (
 			<div ref='main' id='loading'>
