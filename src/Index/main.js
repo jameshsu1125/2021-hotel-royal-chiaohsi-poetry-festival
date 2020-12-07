@@ -9,16 +9,18 @@ import { TouchEvent, LocalStorage } from 'lesca';
 import Canvas3D from './../Canvas3d/main';
 import Touch from './touch';
 import Background from './background';
+import { Landscape } from 'lesca/lib/UI';
+import Preload from './preload';
 
 export default class main extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { home: false, loading: true, poetry: false };
-		//this.state = { home: false, loading: false, poetry: true };
+		this.state = { home: false, loading: false, poetry: false, preload: false };
 
 		TouchEvent.init();
-		let data;
+		this.data;
+
 		if (LocalStorage.get('data') == null || LocalStorage.get('data') == undefined) {
 			let d = [];
 			for (let i = 0; i < 12; i++) {
@@ -28,16 +30,18 @@ export default class main extends React.Component {
 				});
 			}
 			LocalStorage.set('data', JSON.stringify(d));
-			data = d;
+			this.data = d;
 		} else {
-			data = JSON.parse(LocalStorage.get('data'));
+			this.data = JSON.parse(LocalStorage.get('data'));
 		}
 
 		// todo: get un-read poetry index
-		//console.log(data);
-		let unread = data.filter((i) => !i.readed);
-		this.unread_index = unread[Math.floor(Math.random() * unread.length)].index;
-		//this.unread_index = 0;
+		//console.log(this.data);
+		let unread = this.data.filter((i) => !i.readed);
+
+		if (unread.length == 0) this.unread_index = this.data[Math.floor(Math.random() * unread.length)].index;
+		else this.unread_index = unread[Math.floor(Math.random() * unread.length)].index;
+		//this.unread_index = 11;
 
 		// todo: webGL
 		this.canvas3D = new Canvas3D();
@@ -46,6 +50,10 @@ export default class main extends React.Component {
 			this.refs.touch.addTouchEvent();
 			this.refs.bg.hide();
 		};
+	}
+
+	background_loaded() {
+		this.setState({ loading: true });
 	}
 
 	home_distory() {
@@ -76,21 +84,40 @@ export default class main extends React.Component {
 	}
 
 	loading_ready() {
-		this.setState({ home: true, menu: true, poetry: true });
+		this.setState({ home: true, menu: true, poetry: true, preload: true });
 	}
 
 	loading_finished() {
-		this.refs.home.in();
-		this.refs.menu.in();
-		this.setState({ loading: false, poetry: false });
+		this.refs.home.in(() => {
+			this.refs.menu.in();
+		});
+		this.setState({ loading: false, poetry: false, preload: false });
 	}
 
 	append_loading() {
 		if (this.state.loading) return <Loading ref='loading' ready={this.loading_ready.bind(this)} finished={this.loading_finished.bind(this)} />;
 	}
 
+	menu_clicked(v) {
+		if (v < 12) {
+			this.unread_index = this.data[v].index;
+			this.data[v].readed = true;
+			LocalStorage.set('data', JSON.stringify(this.data));
+			if (this.state.home) {
+				this.refs.home.out();
+			} else {
+				this.setState({ poetry: false }, () => {
+					this.setState({ poetry: true }, () => {
+						this.refs.poetry.in(true);
+						this.refs.touch.show();
+					});
+				});
+			}
+		}
+	}
+
 	append_menu() {
-		if (this.state.menu) return <Menu ref='menu' update={this.loading_update.bind(this)} />;
+		if (this.state.menu) return <Menu ref='menu' update={this.loading_update.bind(this)} clicked={this.menu_clicked.bind(this)} />;
 	}
 
 	append_poetry() {
@@ -114,10 +141,17 @@ export default class main extends React.Component {
 		this.refs.poetry.scrollUp();
 	}
 
+	append_preload() {
+		if (this.state.preload) {
+			return <Preload update={this.loading_update.bind(this)} />;
+		}
+	}
+
 	render() {
 		return (
 			<div ref='main' id='index'>
-				<Background ref='bg' />
+				{this.append_preload()}
+				<Background ref='bg' loaded={this.background_loaded.bind(this)} />
 				{this.append_home()}
 				<div ref='content' className='content'>
 					{this.append_poetry()}
@@ -125,6 +159,7 @@ export default class main extends React.Component {
 				<Touch ref='touch' up={this.event_up.bind(this)} sync={this.event_sync.bind(this)} scrollUp={this.event_scrollUp.bind(this)} />
 				{this.append_menu()}
 				{this.append_loading()}
+				<Landscape />
 			</div>
 		);
 	}

@@ -49,7 +49,6 @@ export default class main extends React.Component {
 				TouchEvent.add('#article', () => {
 					TouchEvent.remove('#article');
 					$('html, body').stop();
-					$('html, body').clearQueue();
 				});
 			},
 			title: {
@@ -165,6 +164,10 @@ export default class main extends React.Component {
 
 	componentDidMount() {
 		this.tr.init();
+	}
+
+	componentWillUnmount() {
+		$('html, body').stop();
 	}
 
 	append_body() {

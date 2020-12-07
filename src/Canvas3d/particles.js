@@ -50,7 +50,10 @@ module.exports = {
 	},
 	fadeIn() {
 		this.fade = true;
-		if (this.object3D) this.object3D.material.uniforms.uTime.value = 0.0;
+		if (this.object3D) {
+			this.object3D.material.uniforms.uTime.value = 0.0;
+			this.object3D.material.uniforms.uPy.value = 0.0;
+		}
 		let time = 5000;
 		$(this.uniforms.uAlpha).animate({ value: 1.0 }, time / 2, 'swing');
 		$(this.uniforms.uPz).animate({ value: 0.0 }, time, 'easeInExpo');
@@ -154,7 +157,7 @@ module.exports = {
 		if (!this.object3D) return;
 		let r;
 		if (Device.get() == 'desktop') r = 0.00095;
-		else r = 0.001;
+		else r = 0.0009;
 		const s = window.innerHeight * r;
 		this.object3D.scale.set(s, s, s);
 	},

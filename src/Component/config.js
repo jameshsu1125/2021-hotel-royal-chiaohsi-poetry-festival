@@ -1,11 +1,11 @@
 module.exports = {
 	Loader: {
 		index: 0,
-		max: 57,
+		max: 69,
 		add() {
 			this.index++;
 
-			if (this.index >= this.max) {
+			if (this.index == this.max) {
 				this.end();
 			} else if (this.index > this.max) {
 				console.log(this.index, this.max);

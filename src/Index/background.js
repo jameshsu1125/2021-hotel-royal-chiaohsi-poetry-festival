@@ -1,5 +1,8 @@
 import React from 'react';
 import './background.less';
+import $ from 'jquery';
+require('jquery-easing');
+require('jquery.waitforimages');
 
 export default class background extends React.Component {
 	constructor(props) {
@@ -9,15 +12,11 @@ export default class background extends React.Component {
 	}
 
 	componentDidMount() {
-		//script
-	}
-
-	componentDidUpdate() {
-		//script
-	}
-
-	componentWillUnmount() {
-		//script
+		$(this.refs.main).waitForImages({
+			finished: () => this.props.loaded(),
+			each: (e) => {},
+			waitForAll: true,
+		});
 	}
 
 	show() {

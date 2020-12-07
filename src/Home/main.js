@@ -26,7 +26,7 @@ export default class content extends React.Component {
 				this.title2.init();
 				this.btn.init();
 			},
-			in() {
+			in(fn) {
 				root.refs.main.style.display = 'block';
 				this.t0.in();
 				this.t1.in();
@@ -36,7 +36,7 @@ export default class content extends React.Component {
 				this.t5.in();
 				this.title1.in();
 				this.title2.in();
-				this.btn.in();
+				this.btn.in(fn);
 			},
 			out() {
 				TouchEvent.remove('.btn-container');
@@ -79,7 +79,7 @@ export default class content extends React.Component {
 					this.c = $(root.refs.btn);
 					this.tran();
 				},
-				in() {
+				in(fn) {
 					$(this)
 						.delay(this.delay.in)
 						.animate(
@@ -89,6 +89,7 @@ export default class content extends React.Component {
 								step: () => this.tran(),
 								complete: () => {
 									this.tran();
+									fn();
 									this.evt();
 								},
 								easing: 'easeOutQuart',
@@ -437,8 +438,12 @@ export default class content extends React.Component {
 		});
 	}
 
-	in() {
-		this.tr.in();
+	in(fn) {
+		this.tr.in(fn);
+	}
+
+	out() {
+		this.tr.out();
 	}
 
 	render() {

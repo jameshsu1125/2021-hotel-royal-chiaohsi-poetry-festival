@@ -13,7 +13,10 @@ export default class poetry_0 extends React.Component {
 				this.canvas.init();
 				this.arr.init();
 			},
-			in() {},
+			in() {
+				root.nowDate = new Date();
+				root.setTop();
+			},
 			scrollUp() {
 				this.canvas.scrollUp();
 			},
@@ -72,6 +75,13 @@ export default class poetry_0 extends React.Component {
 				},
 			},
 		};
+	}
+
+	setTop() {
+		$('html, body').stop();
+		let time = new Date().getTime() - this.nowDate;
+		$('html, body').scrollTop(0);
+		if (time < 2000) setTimeout(() => this.setTop(), 2);
 	}
 
 	componentDidMount() {

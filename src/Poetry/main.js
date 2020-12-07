@@ -9,6 +9,7 @@ import Data from './data';
 
 import $ from 'jquery';
 require('jquery-easing');
+require('jquery.waitforimages');
 
 export default class poetry extends React.Component {
 	constructor(props) {
@@ -19,24 +20,27 @@ export default class poetry extends React.Component {
 			init() {
 				this.bg.init();
 			},
-			in() {
-				this.bg.in();
+			in(quickFadein) {
+				this.bg.in(quickFadein);
 			},
 			bg: {
 				o: 0,
-				time: 1000,
+				time: 2000,
 				init() {
 					this.c = $(root.refs.bg);
 					this.tran();
 				},
-				in() {
+				in(quickFadein) {
+					let t = this.time;
+					if (quickFadein) t = 1;
+
 					$(this).animate(
 						{ o: 1 },
 						{
-							duration: this.time,
+							duration: t,
 							step: () => this.tran(),
 							complete: () => this.tran(),
-							easing: 'easeOutQuart',
+							easing: 'swing',
 						}
 					);
 				},
@@ -54,11 +58,16 @@ export default class poetry extends React.Component {
 		this.tr.init();
 	}
 
-	in() {
+	in(quickFadein) {
 		$('html, body').scrollTop(0);
 		this.refs.main.style.display = 'block';
 		this.refs.headline.in();
-		this.tr.in();
+
+		$(this.refs.main).waitForImages({
+			finished: () => this.tr.in(quickFadein),
+			each: (e) => {},
+			waitForAll: true,
+		});
 	}
 
 	update_uPy(dy) {

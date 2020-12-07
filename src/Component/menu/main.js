@@ -61,6 +61,8 @@ export default class menu extends React.Component {
 				},
 				open() {
 					this.is = false;
+					$('html, body').stop();
+					$('html, body').clearQueue();
 					root.setState({ content: true }, () => {
 						TouchEvent.preventDefault = false;
 					});
@@ -76,9 +78,20 @@ export default class menu extends React.Component {
 				},
 				close() {
 					this.is = true;
-					root.setState({ content: false }, () => {
-						TouchEvent.preventDefault = true;
-					});
+
+					$(root.refs.content).animate(
+						{
+							opacity: 0,
+						},
+						this.time,
+						'easeOutQuart',
+						() => {
+							root.setState({ content: false }, () => {
+								TouchEvent.preventDefault = true;
+							});
+						}
+					);
+
 					$(this).animate(
 						{ o: 1 },
 						{
@@ -115,6 +128,7 @@ export default class menu extends React.Component {
 	}
 
 	clicked(v) {
+		this.props.clicked(v);
 		this.tr.menu.close();
 	}
 
