@@ -4,7 +4,7 @@ import './main.less';
 import $ from 'jquery';
 require('jquery-easing');
 
-import ClipboardJS from 'clipboard';
+var ClipboardJS = require('clipboard');
 import ReactHtmlParser from 'react-html-parser';
 
 import { Facebook, Line, Hash } from 'lesca';
@@ -46,41 +46,24 @@ export default class main extends React.Component {
 					TouchEvent.remove('#article');
 					$('html, body').stop();
 				});
-
-				TouchEvent.add('.fb', () => {
-					let u = window.location.href;
-					Facebook.share({
-						id: '2452563928384846',
-						redirect_uri: u,
-						url: u,
-						hash: '礁溪',
+				if (ClipboardJS.isSupported()) {
+					let clipboard = new ClipboardJS('.link', {
+						text: function (trigger) {
+							return Hash.root();
+						},
 					});
-				});
 
-				TouchEvent.add('.line', () => {
-					Line.share(Hash.root(), 'line message not set yet');
-				});
+					clipboard.on('success', function (e) {
+						alert('網址已複製');
+					});
 
-				TouchEvent.add('.link', () => {
-					$('.link').trigger('click');
-				});
-
-				let clipboard = new ClipboardJS('.link');
-
-				clipboard.on('success', function (e) {
-					alert('網址已複製');
-					e.clearSelection();
-				});
-
-				clipboard.on('error', function (e) {
-					alert('網址複製失敗, 請換個瀏覽器');
-					console.error('Action:', e.action);
-					console.error('Trigger:', e.trigger);
-				});
-
-				TouchEvent.add('.btn-container', () => {
-					root.props.next();
-				});
+					clipboard.on('error', function (e) {
+						alert('網址複製失敗..');
+						$(e.trigger).hide();
+					});
+				} else {
+					$(this.refs.link).hide();
+				}
 			},
 			title: {
 				y: 300,
@@ -162,7 +145,7 @@ export default class main extends React.Component {
 				fn(index, target, delay, time) {
 					this.py = index * root.ctxGap;
 					this.p = {
-						opacity: 0,
+						opacity: 0.1,
 						top: this.py + 300 + 'px',
 					};
 
@@ -212,6 +195,19 @@ export default class main extends React.Component {
 		this.tr.scrollUp();
 	}
 
+	line_share() {
+		Line.share(Hash.root(), 'line message...');
+	}
+
+	fb_share() {
+		let u = window.location.href;
+		Facebook.share({
+			id: '2452563928384846',
+			redirect_uri: u,
+			url: u,
+		});
+	}
+
 	render() {
 		return (
 			<div ref='main' id='article'>
@@ -219,18 +215,17 @@ export default class main extends React.Component {
 					{ReactHtmlParser(this.props.data.title)}
 				</div>
 				<div ref='sub' className='row sub'>
-					{/* {this.props.data.sub} */}
 					<div className='name' style={{ backgroundImage: `url(${this.props.data.sub})` }}></div>
 				</div>
 				<div ref='ctx' className='row block'>
 					{this.append_body()}
 				</div>
 				<div className='share'>
-					<div className='fb'></div>
-					<div className='line'></div>
-					<div className='link' data-clipboard-text={window.location.href}></div>
+					<div className='fb' onClick={this.fb_share.bind(this)}></div>
+					<div className='line' onClick={this.line_share.bind(this)}></div>
+					<div className='link'></div>
 				</div>
-				<div ref='btn' className='btn-container'>
+				<div ref='btn' onClick={this.props.next} className='btn-container'>
 					<div className='corner'>
 						<div></div>
 						<div></div>

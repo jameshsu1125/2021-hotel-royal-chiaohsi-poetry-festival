@@ -60,8 +60,10 @@ export default class main extends React.Component {
 		/**
 		 * ! debug => set state without loading => home
 		 */
+
 		this.setState({ loading: true });
 		return;
+
 		this.setState({ poetry: true, menu: true }, () => {
 			this.refs.poetry.in();
 			this.refs.menu.in();
@@ -119,6 +121,7 @@ export default class main extends React.Component {
 	}
 
 	next_poetry() {
+		TouchEvent.preventDefault = true;
 		let index = this.unread_index + 1;
 		if (index >= 12) index = 0;
 		this.menu_clicked(index);
