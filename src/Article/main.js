@@ -4,7 +4,10 @@ import './main.less';
 import $ from 'jquery';
 require('jquery-easing');
 
+import ClipboardJS from 'clipboard';
 import ReactHtmlParser from 'react-html-parser';
+
+import { Facebook, Line, Hash } from 'lesca';
 
 export default class main extends React.Component {
 	constructor(props) {
@@ -33,22 +36,50 @@ export default class main extends React.Component {
 					this.ctx.sync();
 				};
 				$(window).scroll(this.scroll);
-				let h = 1453 + root.props.data.body.length * root.ctxGap - window.innerHeight;
-
+				let h = 300;
 				if (h > 0) {
 					$('html, body')
 						.stop()
-						.animate(
-							{
-								scrollTop: h,
-							},
-							root.props.data.body.length * root.ctx_each_scroll_time,
-							'linear'
-						);
+						.animate({ scrollTop: h }, 4 * root.ctx_each_scroll_time, 'linear');
 				}
 				TouchEvent.add('#article', () => {
 					TouchEvent.remove('#article');
 					$('html, body').stop();
+				});
+
+				TouchEvent.add('.fb', () => {
+					let u = window.location.href;
+					Facebook.share({
+						id: '2452563928384846',
+						redirect_uri: u,
+						url: u,
+						hash: '礁溪',
+					});
+				});
+
+				TouchEvent.add('.line', () => {
+					Line.share(Hash.root(), 'line message not set yet');
+				});
+
+				TouchEvent.add('.link', () => {
+					$('.link').trigger('click');
+				});
+
+				let clipboard = new ClipboardJS('.link');
+
+				clipboard.on('success', function (e) {
+					alert('網址已複製');
+					e.clearSelection();
+				});
+
+				clipboard.on('error', function (e) {
+					alert('網址複製失敗, 請換個瀏覽器');
+					console.error('Action:', e.action);
+					console.error('Trigger:', e.trigger);
+				});
+
+				TouchEvent.add('.btn-container', () => {
+					root.props.next();
 				});
 			},
 			title: {
@@ -188,10 +219,29 @@ export default class main extends React.Component {
 					{ReactHtmlParser(this.props.data.title)}
 				</div>
 				<div ref='sub' className='row sub'>
-					{this.props.data.sub}
+					{/* {this.props.data.sub} */}
+					<div className='name' style={{ backgroundImage: `url(${this.props.data.sub})` }}></div>
 				</div>
 				<div ref='ctx' className='row block'>
 					{this.append_body()}
+				</div>
+				<div className='share'>
+					<div className='fb'></div>
+					<div className='line'></div>
+					<div className='link' data-clipboard-text={window.location.href}></div>
+				</div>
+				<div ref='btn' className='btn-container'>
+					<div className='corner'>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+					<div className='txt'>點擊螢幕 讀下一首</div>
+					<div className='corner'>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
 				</div>
 			</div>
 		);

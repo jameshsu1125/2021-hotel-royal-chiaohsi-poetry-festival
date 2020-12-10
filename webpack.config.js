@@ -10,6 +10,7 @@ module.exports = (env) => {
 	const config = {
 		entry: {
 			index: './src/index.js',
+			desktop: './src/desktop.js',
 		},
 		module: {
 			rules: [
@@ -72,7 +73,7 @@ module.exports = (env) => {
 			port: 8080,
 			public: 'localhost:8080',
 			disableHostCheck: true,
-			https: false,
+			https: true,
 		},
 		performance: {
 			hints: false,
@@ -85,14 +86,7 @@ module.exports = (env) => {
 			new UnusedFilesWebpackPlugin({
 				globOptions: {
 					patterns: ['src/**/*.js', 'src/**/*.png', 'src/**/*.jpg'],
-					ignore: [
-						'node_modules/**/*',
-						'dist/**/*',
-						'*.json',
-						'**/*.config.*',
-						'*.md',
-						'src/LESCA/**/*',
-					],
+					ignore: ['node_modules/**/*', 'dist/**/*', '*.json', '**/*.config.*', '*.md', 'src/LESCA/**/*'],
 				},
 			})
 		);

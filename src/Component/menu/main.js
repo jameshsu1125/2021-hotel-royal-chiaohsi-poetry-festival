@@ -23,8 +23,7 @@ export default class menu extends React.Component {
 				this.menu.in();
 			},
 			menu: {
-				x: -80,
-				o: 1,
+				o: 0,
 				time: 500,
 				is: true,
 				init() {
@@ -33,7 +32,7 @@ export default class menu extends React.Component {
 				},
 				in() {
 					$(this).animate(
-						{ x: 35 },
+						{ o: 0.8 },
 						{
 							duration: this.time,
 							step: () => this.tran(),
@@ -62,10 +61,11 @@ export default class menu extends React.Component {
 				open() {
 					this.is = false;
 					$('html, body').stop();
-					$('html, body').clearQueue();
+
 					root.setState({ content: true }, () => {
 						TouchEvent.preventDefault = false;
 					});
+
 					$(this).animate(
 						{ o: 0 },
 						{
@@ -93,7 +93,7 @@ export default class menu extends React.Component {
 					);
 
 					$(this).animate(
-						{ o: 1 },
+						{ o: 0.8 },
 						{
 							duration: this.time,
 							step: () => this.tran(),
@@ -104,7 +104,6 @@ export default class menu extends React.Component {
 				},
 				tran() {
 					this.c.css({
-						left: this.x + 'px',
 						opacity: this.o,
 					});
 				},

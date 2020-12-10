@@ -73,7 +73,7 @@ export default class content extends React.Component {
 			},
 			btn: {
 				o: 0,
-				delay: { in: 500 + 2000 + 1000 + 1000 + 1000 + 1000 + 2000, out: 0 },
+				delay: { in: 200 + 500 + 200 + 1000 + 100 + 1000 + 500 + 1000, out: 0 },
 				time: 1000,
 				init() {
 					this.c = $(root.refs.btn);
@@ -120,7 +120,7 @@ export default class content extends React.Component {
 				o: 0,
 				top: 30,
 				time: 800,
-				delay: { in: 500 + 2000 + 1000 + 1000 + 1000 + 1500, out: 0 },
+				delay: { in: 200 + 500 + 200 + 1000 + 100 + 1000 + 500, out: 0 },
 				init() {
 					this.c = $(root.refs.title2);
 					this.tran();
@@ -149,7 +149,7 @@ export default class content extends React.Component {
 				o: 0,
 				top: 30,
 				time: 800,
-				delay: { in: 500 + 2000 + 1000 + 1000 + 1000 + 1000, out: 0 },
+				delay: { in: 200 + 500 + 200 + 1000 + 100 + 1000, out: 0 },
 				init() {
 					this.c = $(root.refs.title1);
 					this.tran();
@@ -177,7 +177,7 @@ export default class content extends React.Component {
 			t0: {
 				o: 0,
 				s: 1.2,
-				time: 2000,
+				time: 1000,
 				delay: { in: 0, out: 0 },
 				init() {
 					this.c = $(root.refs.t0);
@@ -223,8 +223,8 @@ export default class content extends React.Component {
 			t1: {
 				o: 0,
 				s: 1.2,
-				time: 2000,
-				delay: { in: 500, out: 100 },
+				time: 1000,
+				delay: { in: 200, out: 100 },
 				init() {
 					this.c = $(root.refs.t1);
 					this.tran();
@@ -269,8 +269,8 @@ export default class content extends React.Component {
 			t2: {
 				o: 0,
 				s: 1.1,
-				time: 2000,
-				delay: { in: 500 + 2000, out: 200 },
+				time: 1000,
+				delay: { in: 200 + 500, out: 200 },
 				init() {
 					this.c = $(root.refs.t2);
 					this.tran();
@@ -315,8 +315,8 @@ export default class content extends React.Component {
 			t3: {
 				o: 0,
 				s: 1.2,
-				time: 5000,
-				delay: { in: 500 + 2000 + 1000, out: 300 },
+				time: 3000,
+				delay: { in: 200 + 500 + 200, out: 300 },
 				init() {
 					this.c = $(root.refs.t3);
 					this.tran();
@@ -361,8 +361,8 @@ export default class content extends React.Component {
 			t4: {
 				o: 0,
 				s: 1,
-				time: 1200,
-				delay: { in: 500 + 2000 + 1000 + 1000, out: 400 },
+				time: 1000,
+				delay: { in: 200 + 500 + 200 + 1000, out: 400 },
 				init() {
 					this.c = $(root.refs.t4);
 					this.tran();
@@ -394,8 +394,8 @@ export default class content extends React.Component {
 			t5: {
 				o: 0,
 				s: 1,
-				time: 1200,
-				delay: { in: 500 + 2000 + 1000 + 1000 + 500, out: 0 },
+				time: 1000,
+				delay: { in: 200 + 500 + 200 + 1000 + 100, out: 0 },
 				init() {
 					this.c = $(root.refs.t5);
 					this.tran();
@@ -470,7 +470,7 @@ export default class content extends React.Component {
 							<div></div>
 							<div></div>
 						</div>
-						<div className='txt'>甩動手機 灑出道別詩作</div>
+						<div className='txt'>點擊螢幕 灑出道別詩作</div>
 						<div className='corner'>
 							<div></div>
 							<div></div>

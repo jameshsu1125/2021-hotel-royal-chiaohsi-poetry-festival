@@ -1,0 +1,148 @@
+#about {
+	position: relative;
+	width: 100%;
+	top: 0px;
+	text-align: center;
+
+	display: none;
+	pointer-events: none;
+
+	.background {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		background: rgba(0, 0, 0, 0) url('./img/bg.jpg') no-repeat scroll center center / cover;
+	}
+
+	& > div:last-child {
+		padding-bottom: 135px;
+	}
+
+	.row {
+		float: left;
+		width: 100%;
+		height: auto;
+		text-align: center;
+
+		@img: './../Home/img/logo.svg';
+		@r: 0.55;
+		.logo {
+			position: relative;
+			width: image-width(@img) * @r;
+			height: image-height(@img) * @r;
+			display: inline-block;
+			margin-top: 338px;
+			clear: both;
+
+			div {
+				position: absolute;
+				background-size: 100%;
+				background-repeat: no-repeat;
+			}
+
+			& > div:nth-child(1) {
+				@txt: './../Home/img/logo_t1.svg';
+				background-image: url(@txt);
+				width: 40.4%;
+				height: 34.2%;
+				left: 44.4%;
+				top: 0%;
+				transform-origin: 26px 393px;
+			}
+
+			& > div:nth-child(2) {
+				@txt: './../Home/img/logo_t2.svg';
+				background-image: url(@txt);
+				width: 23.2%;
+				height: 24.2%;
+				left: 51.1%;
+				top: 43.2%;
+				transform-origin: -5px 175px;
+			}
+
+			& > div:nth-child(3) {
+				@txt: './../Home/img/logo_t3.svg';
+				background-image: url(@txt);
+				width: 36.4%;
+				height: 33.31%;
+				left: 0%;
+				top: 21.2%;
+				transform-origin: 228px 286px;
+			}
+
+			& > div:nth-child(4) {
+				@txt: './../Home/img/logo_t4.svg';
+				background-image: url(@txt);
+				width: 37.2%;
+				height: 41.21%;
+				left: 3.5%;
+				top: 58%;
+				transform-origin: 212px 99px;
+			}
+
+			& > div:nth-child(5) {
+				@txt: './../Home/img/logo_t5.svg';
+				background-image: url(@txt);
+				width: 49.9%;
+				height: 16.31%;
+				left: 50.1%;
+				top: 75.6%;
+			}
+
+			& > div:nth-child(6) {
+				@txt: './../Home/img/logo_t6.svg';
+				background-image: url(@txt);
+				width: 35.4%;
+				height: 5.71%;
+				left: 50.8%;
+				top: 94.3%;
+			}
+		}
+	}
+
+	.footer {
+		position: relative;
+		@img: './../Loading/img/logo.svg';
+		background-image: url(@img);
+		width: 100%;
+		height: 150px;
+		background-size: auto 100%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	.ctx {
+		position: relative;
+		width: 100%;
+		height: auto;
+
+		margin-top: 115px;
+
+		color: #fff;
+
+		p {
+			font-family: '游明朝体', 'Yu Mincho', YuMincho, 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'MS P明朝', 'MS PMincho', serif;
+			transform: scale(1, 0.8);
+			font-size: 50px;
+			font-weight: bolder;
+		}
+
+		.video_desc {
+			width: 100%;
+			font-family: 'Microsoft JhengHei', '微軟正黑體', Arial, Helvetica, sans-serif;
+			transform: scale(1, 0.8);
+			font-size: 40px;
+			margin-block-end: 70px;
+		}
+
+		.video {
+			position: relative;
+			width: 600px;
+			height: 295px;
+			background-color: #111;
+			display: inline-block;
+			pointer-events: auto;
+		}
+	}
+}

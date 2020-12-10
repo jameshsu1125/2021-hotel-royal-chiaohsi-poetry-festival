@@ -24,8 +24,8 @@ module.exports = {
 		this.container = new THREE.Object3D();
 		const loader = new THREE.TextureLoader();
 		for (let i = 0; i < 100; i++) {
-			let count = 1 + Math.random() * 2;
-			if (count > 2.9) count = 3 + Math.random() * 2;
+			let count = 1 + Math.random() * 1;
+			if (count > 1.986) count = 2 + Math.random() * 1;
 			this.layers.push(count);
 		}
 		loader.load(img, (texture) => {

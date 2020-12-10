@@ -5,18 +5,21 @@ import Loading from './../Loading/main';
 import Menu from './../Component/menu/main';
 import Home from './../Home/main';
 import Poetry from './../Poetry/main';
-import { TouchEvent, LocalStorage } from 'lesca';
+import { TouchEvent, LocalStorage, UserAgent, Hash, Facebook } from 'lesca';
 import Canvas3D from './../Canvas3d/main';
 import Touch from './touch';
 import Background from './background';
 import { Landscape } from 'lesca/lib/UI';
 import Preload from './preload';
+import About from './../About/main';
 
 export default class main extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { home: false, loading: false, poetry: false, preload: false };
+		this.state = { home: false, loading: false, poetry: false, preload: false, about: false };
+
+		if (UserAgent.get() === 'desktop') window.location.replace(Hash.root() + 'desktop.html');
 
 		TouchEvent.init();
 		this.data;
@@ -35,25 +38,35 @@ export default class main extends React.Component {
 			this.data = JSON.parse(LocalStorage.get('data'));
 		}
 
-		// todo: get un-read poetry index
-		//console.log(this.data);
+		// get un-read poetry index
 		let unread = this.data.filter((i) => !i.readed);
-
-		if (unread.length == 0) this.unread_index = this.data[Math.floor(Math.random() * unread.length)].index;
+		if (unread.length == 0) this.unread_index = this.data[Math.floor(Math.random() * this.data.length)].index;
 		else this.unread_index = unread[Math.floor(Math.random() * unread.length)].index;
-		//this.unread_index = 11;
+		// ! debug this.unread_index = 6;
 
-		// todo: webGL
+		// init webGL
 		this.canvas3D = new Canvas3D();
 		this.canvas3D.particles.faded = () => {
 			this.refs.poetry.refs.headline.add_arrow();
 			this.refs.touch.addTouchEvent();
 			this.refs.bg.hide();
 		};
+
+		// Facebook
+		Facebook.init('2452563928384846', {});
 	}
 
 	background_loaded() {
+		/**
+		 * ! debug => set state without loading => home
+		 */
 		this.setState({ loading: true });
+		return;
+		this.setState({ poetry: true, menu: true }, () => {
+			this.refs.poetry.in();
+			this.refs.menu.in();
+			this.refs.touch.show();
+		});
 	}
 
 	home_distory() {
@@ -61,10 +74,16 @@ export default class main extends React.Component {
 	}
 
 	home_enter() {
-		this.setState({ poetry: true }, () => {
-			this.refs.poetry.in();
-			this.refs.touch.show();
-		});
+		if (!this.state.about) {
+			this.setState({ poetry: true }, () => {
+				this.refs.poetry.in();
+				this.refs.touch.show();
+			});
+		} else {
+			setTimeout(() => {
+				this.refs.about.in();
+			}, 500);
+		}
 	}
 
 	componentDidMount() {
@@ -80,22 +99,29 @@ export default class main extends React.Component {
 	}
 
 	loading_update() {
-		this.refs.loading.update();
+		if (this.refs.loading) this.refs.loading.update();
 	}
 
 	loading_ready() {
-		this.setState({ home: true, menu: true, poetry: true, preload: true });
+		this.setState({ home: true, menu: true, poetry: true, preload: true, about: true });
 	}
 
 	loading_finished() {
-		this.refs.home.in(() => {
-			this.refs.menu.in();
+		this.setState({ loading: false, poetry: false, preload: false, about: false }, () => {
+			this.refs.home.in(() => {
+				this.refs.menu.in();
+			});
 		});
-		this.setState({ loading: false, poetry: false, preload: false });
 	}
 
 	append_loading() {
 		if (this.state.loading) return <Loading ref='loading' ready={this.loading_ready.bind(this)} finished={this.loading_finished.bind(this)} />;
+	}
+
+	next_poetry() {
+		let index = this.unread_index + 1;
+		if (index >= 12) index = 0;
+		this.menu_clicked(index);
 	}
 
 	menu_clicked(v) {
@@ -106,11 +132,21 @@ export default class main extends React.Component {
 			if (this.state.home) {
 				this.refs.home.out();
 			} else {
-				this.setState({ poetry: false }, () => {
+				this.setState({ poetry: false, about: false }, () => {
 					this.setState({ poetry: true }, () => {
 						this.refs.poetry.in(true);
 						this.refs.touch.show();
 					});
+				});
+			}
+		} else if (v == 12) {
+			if (this.state.home) {
+				this.setState({ about: true }, () => {
+					this.refs.home.out();
+				});
+			} else {
+				this.setState({ about: true, poetry: false }, () => {
+					this.refs.about.in();
 				});
 			}
 		}
@@ -122,7 +158,7 @@ export default class main extends React.Component {
 
 	append_poetry() {
 		if (this.state.poetry) {
-			return <Poetry ref='poetry' canvas={this.canvas3D} index={this.unread_index} />;
+			return <Poetry ref='poetry' next={this.next_poetry.bind(this)} canvas={this.canvas3D} index={this.unread_index} />;
 		}
 	}
 
@@ -142,9 +178,11 @@ export default class main extends React.Component {
 	}
 
 	append_preload() {
-		if (this.state.preload) {
-			return <Preload update={this.loading_update.bind(this)} />;
-		}
+		if (this.state.preload) return <Preload update={this.loading_update.bind(this)} />;
+	}
+
+	append_about() {
+		if (this.state.about) return <About ref='about' update={this.loading_update.bind(this)} />;
 	}
 
 	render() {
@@ -152,11 +190,15 @@ export default class main extends React.Component {
 			<div ref='main' id='index'>
 				{this.append_preload()}
 				<Background ref='bg' loaded={this.background_loaded.bind(this)} />
+
+				{this.append_about()}
+
 				{this.append_home()}
 				<div ref='content' className='content'>
 					{this.append_poetry()}
 				</div>
 				<Touch ref='touch' up={this.event_up.bind(this)} sync={this.event_sync.bind(this)} scrollUp={this.event_scrollUp.bind(this)} />
+
 				{this.append_menu()}
 				{this.append_loading()}
 				<Landscape />

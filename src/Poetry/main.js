@@ -28,23 +28,27 @@ export default class poetry extends React.Component {
 				time: 2000,
 				init() {
 					this.c = $(root.refs.bg);
+					this.bg = $(root.refs.bg0);
 					this.tran();
 				},
 				in(quickFadein) {
-					let t = this.time;
-					if (quickFadein) t = 1;
+					//let t = this.time;
+					//if (quickFadein) t = 2000;
 
 					$(this).animate(
 						{ o: 1 },
 						{
-							duration: t,
+							duration: this.time,
 							step: () => this.tran(),
-							complete: () => this.tran(),
+							complete: () => {
+								this.tran();
+							},
 							easing: 'swing',
 						}
 					);
 				},
 				blur() {
+					this.bg.css('display', 'block');
 					this.c.addClass('blur');
 				},
 				tran() {
@@ -89,11 +93,16 @@ export default class poetry extends React.Component {
 	}
 
 	append_article() {
-		if (this.state.article) return <Article ref='article' data={this.state.article} index={this.props.index} />;
+		if (this.state.article) return <Article next={this.props.next} ref='article' data={this.state.article} index={this.props.index} />;
 	}
 
 	append_background() {
-		return <div ref='bg' className={'bg_' + this.props.index}></div>;
+		return (
+			<>
+				<div ref='bg0' className={'bg_' + this.props.index}></div>
+				<div ref='bg' className={'bg_' + this.props.index}></div>
+			</>
+		);
 	}
 
 	render() {

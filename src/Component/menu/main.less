@@ -28,6 +28,7 @@
 		.loop(@n, @l:1) when (@l <= @n) {
 			&:nth-child(@{l}) {
 				background: rgba(0, 0, 0, 0) url('./img/bg/@{l}.jpg') no-repeat scroll center center / cover;
+
 				& > div:nth-child(1) {
 					background-image: url('./img/txt/@{l}.png');
 				}
@@ -41,6 +42,7 @@
 			position: relative;
 			width: 100%;
 			height: 100% / 7;
+			overflow: hidden;
 
 			.txt {
 				position: absolute;

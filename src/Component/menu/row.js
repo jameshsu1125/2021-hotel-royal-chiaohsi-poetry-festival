@@ -9,9 +9,10 @@ export default class row extends React.Component {
 	constructor(props) {
 		super(props);
 		const root = this;
+
 		this.tr = {
-			x: 100,
-			time: 1500,
+			x: (window.innerHeight / 7) * -1,
+			time: 1200,
 			gap: 100,
 			ox: 1200,
 			init() {
@@ -22,13 +23,14 @@ export default class row extends React.Component {
 			},
 			tran() {
 				this.c.css({
-					'margin-left': this.x + '%',
+					'margin-top': this.x + 'px',
 				});
 				this.t.css({
-					'background-position': `calc(50% - ${this.ox}px) center`,
+					'background-position': `center calc(50% + ${this.ox}px)`,
 				});
 			},
 			in() {
+				//let time = 14 * this.gap - root.props.index * this.gap;
 				let time = root.props.index * this.gap;
 				$(this)
 					.delay(time)
