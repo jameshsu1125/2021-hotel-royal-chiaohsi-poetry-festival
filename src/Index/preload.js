@@ -21,7 +21,7 @@ export default class preload extends React.Component {
 
 	render() {
 		return (
-			<div ref='main' id='poetry'>
+			<div ref='main' id='background'>
 				<div className='bg_0'></div>
 				<div className='bg_1'></div>
 				<div className='bg_2'></div>
@@ -34,6 +34,18 @@ export default class preload extends React.Component {
 				<div className='bg_9'></div>
 				<div className='bg_10'></div>
 				<div className='bg_11'></div>
+				<div className='bg_0_blur'></div>
+				<div className='bg_1_blur'></div>
+				<div className='bg_2_blur'></div>
+				<div className='bg_3_blur'></div>
+				<div className='bg_4_blur'></div>
+				<div className='bg_5_blur'></div>
+				<div className='bg_6_blur'></div>
+				<div className='bg_7_blur'></div>
+				<div className='bg_8_blur'></div>
+				<div className='bg_9_blur'></div>
+				<div className='bg_10_blur'></div>
+				<div className='bg_11_blur'></div>
 			</div>
 		);
 	}

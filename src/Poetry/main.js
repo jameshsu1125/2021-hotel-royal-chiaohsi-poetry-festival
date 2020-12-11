@@ -16,62 +16,14 @@ export default class poetry extends React.Component {
 		super(props);
 		const root = this;
 		this.state = { article: Data[this.props.index] };
-		this.tr = {
-			init() {
-				this.bg.init();
-			},
-			in(quickFadein) {
-				this.bg.in(quickFadein);
-			},
-			bg: {
-				o: 0,
-				time: 2000,
-				init() {
-					this.c = $(root.refs.bg);
-					this.bg = $(root.refs.bg0);
-					this.tran();
-				},
-				in(quickFadein) {
-					//let t = this.time;
-					//if (quickFadein) t = 2000;
-
-					$(this).animate(
-						{ o: 1 },
-						{
-							duration: this.time,
-							step: () => this.tran(),
-							complete: () => {
-								this.tran();
-							},
-							easing: 'swing',
-						}
-					);
-				},
-				blur() {
-					this.bg.css('display', 'block');
-					this.c.addClass('blur');
-				},
-				tran() {
-					this.c.css('opacity', this.o);
-				},
-			},
-		};
 	}
 
-	componentDidMount() {
-		this.tr.init();
-	}
+	componentDidMount() {}
 
-	in(quickFadein) {
+	in() {
 		$('html, body').scrollTop(0);
 		this.refs.main.style.display = 'block';
 		this.refs.headline.in();
-
-		$(this.refs.main).waitForImages({
-			finished: () => this.tr.in(quickFadein),
-			each: (e) => {},
-			waitForAll: true,
-		});
 	}
 
 	update_uPy(dy) {
@@ -85,7 +37,8 @@ export default class poetry extends React.Component {
 	scrollUp() {
 		this.refs.headline.scrollUp();
 		this.refs.article.scrollUp();
-		this.tr.bg.blur();
+		this.props.bg_blur();
+		//this.tr.bg.blur();
 	}
 
 	append_poetry() {
@@ -108,7 +61,7 @@ export default class poetry extends React.Component {
 	render() {
 		return (
 			<div ref='main' id='poetry'>
-				{this.append_background()}
+				{/* {this.append_background()} */}
 				{this.append_poetry()}
 				{this.append_article()}
 			</div>

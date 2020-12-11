@@ -1,7 +1,7 @@
 module.exports = {
 	Loader: {
 		index: 0,
-		max: 77,
+		max: 96,
 		add() {
 			this.index++;
 

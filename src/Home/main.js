@@ -470,7 +470,7 @@ export default class content extends React.Component {
 							<div></div>
 							<div></div>
 						</div>
-						<div className='txt'>點擊螢幕 灑出道別詩作</div>
+						<div className='txt'></div>
 						<div className='corner'>
 							<div></div>
 							<div></div>

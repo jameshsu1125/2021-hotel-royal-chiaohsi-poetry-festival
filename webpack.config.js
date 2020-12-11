@@ -11,6 +11,7 @@ module.exports = (env) => {
 		entry: {
 			index: './src/index.js',
 			desktop: './src/desktop.js',
+			share: './src/share.js',
 		},
 		module: {
 			rules: [

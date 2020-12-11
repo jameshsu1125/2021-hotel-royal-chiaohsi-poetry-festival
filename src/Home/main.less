@@ -28,11 +28,11 @@
 				}
 
 				.txt {
-					font-family: 'Microsoft JhengHei', '微軟正黑體', Arial, Helvetica, sans-serif;
-					color: #fff;
-					font-size: 36px;
-					letter-spacing: 2px;
-					transform: scale(1, 0.8);
+					@img: './img/enter.png';
+					background-image: url(@img);
+					width: image-width(@img);
+					height: image-height(@img);
+
 					margin: 0px 10px;
 					pointer-events: none;
 				}

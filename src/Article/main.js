@@ -14,9 +14,11 @@ export default class main extends React.Component {
 		super(props);
 		const root = this;
 
-		this.gap = 1000;
-		this.ctxGap = 100;
-		this.ctx_each_scroll_time = 1500;
+		let t = this.props.data.body.toString().split(',').join('　');
+
+		this.gap = 2000;
+		this.ctxGap = 75;
+		this.ctx_each_scroll_time = 500;
 
 		this.tr = {
 			y: window.innerHeight,
@@ -31,39 +33,20 @@ export default class main extends React.Component {
 				this.sub.scrollUp();
 			},
 			evt() {
-				TouchEvent.preventDefault = false;
 				this.scroll = () => {
 					this.ctx.sync();
 				};
 				$(window).scroll(this.scroll);
-				let h = 300;
+				let h = root.ctxGap * 4;
 				if (h > 0) {
 					$('html, body')
 						.stop()
-						.animate({ scrollTop: h }, 4 * root.ctx_each_scroll_time, 'linear');
+						.animate({ scrollTop: h }, 4 * root.ctx_each_scroll_time, 'easeInOutExpo');
 				}
 				TouchEvent.add('#article', () => {
 					TouchEvent.remove('#article');
 					$('html, body').stop();
 				});
-				if (ClipboardJS.isSupported()) {
-					let clipboard = new ClipboardJS('.link', {
-						text: function (trigger) {
-							return Hash.root();
-						},
-					});
-
-					clipboard.on('success', function (e) {
-						alert('網址已複製');
-					});
-
-					clipboard.on('error', function (e) {
-						alert('網址複製失敗..');
-						$(e.trigger).hide();
-					});
-				} else {
-					$(this.refs.link).hide();
-				}
 			},
 			title: {
 				y: 300,
@@ -97,7 +80,7 @@ export default class main extends React.Component {
 			sub: {
 				y: 300,
 				o: 0,
-				delay: root.gap * 1,
+				delay: root.gap * 0,
 				time: 2000,
 				init() {
 					this.c = $(root.refs.sub);
@@ -113,7 +96,10 @@ export default class main extends React.Component {
 								step: () => this.tran(),
 								complete: () => {
 									this.tran();
-									root.tr.evt();
+									TouchEvent.preventDefault = false;
+									setTimeout(() => {
+										root.tr.evt();
+									}, 1000);
 								},
 								easing: 'easeInOutExpo',
 							}
@@ -127,8 +113,8 @@ export default class main extends React.Component {
 				},
 			},
 			ctx: {
-				delay: root.gap * 2,
-				time: 2000,
+				delay: root.gap * 1,
+				time: 1000,
 				init() {
 					this.c = $(root.refs.ctx);
 					this.objs = [];
@@ -178,10 +164,30 @@ export default class main extends React.Component {
 
 	componentDidMount() {
 		this.tr.init();
+
+		if (ClipboardJS.isSupported()) {
+			this.clipboard = new ClipboardJS('.link', {
+				text: function (trigger) {
+					return Hash.root();
+				},
+			});
+
+			this.clipboard.on('success', function (e) {
+				alert('網址已複製');
+			});
+
+			this.clipboard.on('error', function (e) {
+				alert('網址複製失敗..');
+				$(e.trigger).hide();
+			});
+		} else {
+			$(this.refs.link).hide();
+		}
 	}
 
 	componentWillUnmount() {
 		$('html, body').stop();
+		if (this.clipboard) this.clipboard.destroy();
 	}
 
 	append_body() {
@@ -196,15 +202,32 @@ export default class main extends React.Component {
 	}
 
 	line_share() {
-		Line.share(Hash.root(), 'line message...');
+		let u = Hash.root() + `share/poetry_${this.props.index}.html`;
+		let d = [
+			'告別 ◎ 向陽',
+			'鹽的告別 ◎ 鴻鴻',
+			'不去可惜那些 ◎ 任明信',
+			'我的海 ◎ 宋尚緯 ',
+			'春天 ◎ 羅智成',
+			'不言不語 ◎ 曹尼',
+			'賦別 ◎ 鄭愁予',
+			'許願 ◎ 余光中',
+			'不需要一個一個說過再見 ◎ 徐珮芬',
+			'明天就要成為更好的人 ◎ 潘柏霖',
+			'時間與鹽 ◎ 林婉瑜',
+			'某個清晨你醒來 ◎ 何景窗',
+		][this.props.index];
+		let t = this.props.data.body.toString().split(',').join('\n');
+		Line.share(u, d + '\n\n' + t);
 	}
 
 	fb_share() {
-		let u = window.location.href;
+		let u = Hash.root() + `share/poetry_${this.props.index}.html`;
 		Facebook.share({
 			id: '2452563928384846',
-			redirect_uri: u,
+			redirect_uri: Hash.root(),
 			url: u,
+			hashtag: '老爺詩歌節道別與鹽',
 		});
 	}
 
@@ -231,7 +254,7 @@ export default class main extends React.Component {
 						<div></div>
 						<div></div>
 					</div>
-					<div className='txt'>點擊螢幕 讀下一首</div>
+					<div className='txt'></div>
 					<div className='corner'>
 						<div></div>
 						<div></div>

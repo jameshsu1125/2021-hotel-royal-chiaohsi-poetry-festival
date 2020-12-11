@@ -34,7 +34,7 @@ export default class touch extends React.Component {
 			let dy = pxy.clientY - e.targetTouches[0].clientY;
 			this.props.sync(dy);
 
-			if (dy > 300) {
+			if (dy > 200) {
 				this.removeTouchEvent();
 				this.props.scrollUp();
 			}

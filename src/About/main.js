@@ -146,32 +146,32 @@ export default class main extends React.Component {
 						<div className='video'>
 							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
 						</div>
-						<div className='video_desc'>主題影片</div>
+						<div className='video_desc d0'></div>
 
 						<div className='video'>
 							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
 						</div>
-						<div className='video_desc'>何景窗 談「道別與鹽」</div>
+						<div className='video_desc d1'></div>
 
 						<div className='video'>
 							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
 						</div>
-						<div className='video_desc'>鴻鴻 最銘心的道別</div>
+						<div className='video_desc d2'></div>
 
 						<div className='video'>
 							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
 						</div>
-						<div className='video_desc'>鴻鴻 道別的捨與得</div>
+						<div className='video_desc d3'></div>
 
 						<div className='video'>
 							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
 						</div>
-						<div className='video_desc'>徐珮芬 最痛快的道別</div>
+						<div className='video_desc d4'></div>
 
 						<div className='video'>
 							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
 						</div>
-						<div className='video_desc'>徐珮芬 道別是值得的</div>
+						<div className='video_desc d5'></div>
 					</div>
 				</div>
 				<div className='row'>

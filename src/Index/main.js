@@ -49,7 +49,6 @@ export default class main extends React.Component {
 		this.canvas3D.particles.faded = () => {
 			this.refs.poetry.refs.headline.add_arrow();
 			this.refs.touch.addTouchEvent();
-			this.refs.bg.hide();
 		};
 
 		// Facebook
@@ -80,6 +79,7 @@ export default class main extends React.Component {
 			this.setState({ poetry: true }, () => {
 				this.refs.poetry.in();
 				this.refs.touch.show();
+				this.refs.bg.in(this.unread_index);
 			});
 		} else {
 			setTimeout(() => {
@@ -139,6 +139,7 @@ export default class main extends React.Component {
 					this.setState({ poetry: true }, () => {
 						this.refs.poetry.in(true);
 						this.refs.touch.show();
+						this.refs.bg.in(this.unread_index);
 					});
 				});
 			}
@@ -159,9 +160,13 @@ export default class main extends React.Component {
 		if (this.state.menu) return <Menu ref='menu' update={this.loading_update.bind(this)} clicked={this.menu_clicked.bind(this)} />;
 	}
 
+	poetry_blur() {
+		this.refs.bg.blur();
+	}
+
 	append_poetry() {
 		if (this.state.poetry) {
-			return <Poetry ref='poetry' next={this.next_poetry.bind(this)} canvas={this.canvas3D} index={this.unread_index} />;
+			return <Poetry ref='poetry' bg_blur={this.poetry_blur.bind(this)} next={this.next_poetry.bind(this)} canvas={this.canvas3D} index={this.unread_index} />;
 		}
 	}
 

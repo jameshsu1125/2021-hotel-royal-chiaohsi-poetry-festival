@@ -11,60 +11,83 @@ export default class row extends React.Component {
 		const root = this;
 
 		this.tr = {
-			x: (window.innerHeight / 7) * -1,
-			time: 1200,
-			gap: 100,
-			ox: 1200,
 			init() {
-				this.c = $(root.refs.main);
-				this.t = $(root.refs.txt);
-				this.tran();
-				this.in();
-			},
-			tran() {
-				this.c.css({
-					'margin-top': this.x + 'px',
-				});
-				this.t.css({
-					'background-position': `center calc(50% + ${this.ox}px)`,
-				});
+				this.bg.init();
+				this.txt.init();
+				return this;
 			},
 			in() {
-				//let time = 14 * this.gap - root.props.index * this.gap;
-				let time = root.props.index * this.gap;
-				$(this)
-					.delay(time)
-					.animate(
-						{ x: 0, ox: 0 },
+				this.bg.in();
+				this.txt.in();
+			},
+			bg: {
+				t: -100,
+				time: 1200,
+				init() {
+					this.c = $(root.refs.bg);
+					this.tran();
+				},
+				in() {
+					$(this).animate(
+						{ t: 0 },
 						{
 							duration: this.time,
 							step: () => this.tran(),
-							complete: () => {
-								this.tran();
-								this.syncRead();
-							},
-							easing: 'easeInOutQuart',
+							complete: () => this.tran(),
+							easing: 'easeOutQuart',
 						}
 					);
+				},
+				tran() {
+					this.c.css({
+						top: this.t + '%',
+					});
+				},
 			},
-			syncRead() {
-				if (root.props.index >= 12) return;
-				let is = JSON.parse(LocalStorage.get('data'))[root.props.index].readed;
-				if (is) {
-					let t = $(root.refs.readed);
-					t.css('display', 'block');
-					t.animate({ opacity: 1 }, 1000, 'easeOutQuart');
-				}
-			},
-			out() {
-				this.x = 100;
-				this.tran();
+			txt: {
+				x: 0 - window.innerHeight / 7,
+				time: 1000,
+				delay: 1200 + root.props.index * 100,
+				init() {
+					this.c = $(root.refs.txt);
+					this.tran();
+				},
+				in() {
+					$(this)
+						.delay(this.delay)
+						.animate(
+							{ x: 0 },
+							{
+								duration: this.time,
+								step: () => this.tran(),
+								complete: () => {
+									this.tran();
+									this.syncRead();
+								},
+								easing: 'easeOutQuart',
+							}
+						);
+				},
+				tran() {
+					this.c.css({
+						'background-position-y': `calc(50% - ${this.x}px)`,
+					});
+				},
+				syncRead() {
+					if (root.props.index >= 12) return;
+					let is = JSON.parse(LocalStorage.get('data'))[root.props.index].readed;
+					if (is) {
+						let t = $(root.refs.readed);
+						t.css('display', 'block');
+						t.animate({ opacity: 1 }, 1000, 'easeOutQuart');
+					}
+				},
 			},
 		};
 	}
 
 	componentDidMount() {
-		this.tr.init();
+		this.tr.init().in();
 
 		let pxy, mxy;
 		TouchEvent.add('.row' + this.props.index, (e) => {
@@ -91,6 +114,7 @@ export default class row extends React.Component {
 	render() {
 		return (
 			<div ref='main' className={'row' + this.props.index}>
+				<div ref='bg' className='bg'></div>
 				<div ref='txt' className='txt'></div>
 				<div ref='readed' className='readed'></div>
 			</div>
