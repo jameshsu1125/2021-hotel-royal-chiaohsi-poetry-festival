@@ -182,7 +182,7 @@ export default class main extends React.Component {
 
 	event_scrollUp() {
 		this.canvas3D.particles.tween_uPy(5000, 'easeInOutExpo', 2000);
-		this.refs.poetry.scrollUp();
+		if (this.state.poetry) this.refs.poetry.scrollUp();
 	}
 
 	append_preload() {

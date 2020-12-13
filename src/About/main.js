@@ -35,6 +35,9 @@ export default class main extends React.Component {
 							easing: 'easeOutQuart',
 						}
 					);
+
+					let img = this.c.css('background').split('url(')[1].split(')')[0];
+					$('body').css('background-image', `url(${img})`);
 				},
 				tran() {
 					this.c.css('opacity', this.o);

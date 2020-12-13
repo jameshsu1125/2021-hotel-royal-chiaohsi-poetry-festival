@@ -4,9 +4,6 @@ import $ from 'jquery';
 require('jquery-easing');
 require('jquery.waitforimages');
 
-import Odd from './odd_background';
-import Even from './odd_background';
-
 export default class background extends React.Component {
 	constructor(props) {
 		super(props);
@@ -25,6 +22,8 @@ export default class background extends React.Component {
 	blur() {
 		let t = $(this.refs.all);
 		t.append(this.html_blur(this.index));
+		this.append_to_body(t);
+
 		setTimeout(() => {
 			if (t.children('div').length > 1) $(t.children('div')[0]).remove();
 			else this.setState({ home: false });
@@ -35,10 +34,20 @@ export default class background extends React.Component {
 		this.index = v;
 		let t = $(this.refs.all);
 		t.append(this.html(v));
+
+		this.append_to_body(t);
+
 		setTimeout(() => {
 			if (t.children('div').length > 1) $(t.children('div')[0]).remove();
 			else this.setState({ home: false });
 		}, 2000);
+	}
+
+	append_to_body(t) {
+		let n = t.children('div')[1];
+		if (!n) n = t.children('div')[0];
+		let img = $(n).css('background').split('url(')[1].split(')')[0];
+		$('body').css('background-image', `url(${img})`);
 	}
 
 	html_blur(v) {
