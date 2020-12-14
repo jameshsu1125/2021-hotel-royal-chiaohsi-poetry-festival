@@ -21,7 +21,7 @@ export default class main extends React.Component {
 		if (UserAgent.get() === 'desktop') window.location.replace(Hash.root() + 'desktop.html');
 		TouchEvent.init();
 		Http2Https.go();
-		Gtag.install('UA-20404972-1');
+		Gtag.install('G-S754Q14KPR');
 
 		this.data;
 		if (LocalStorage.get('data') == null || LocalStorage.get('data') == undefined) {

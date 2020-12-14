@@ -16,7 +16,7 @@ export default class main extends React.Component {
 
 		if (UserAgent.get() === 'mobile') window.location.replace(Hash.root());
 		Http2Https.go();
-		Gtag.install('UA-20404972-1');
+		Gtag.install('G-S754Q14KPR');
 
 		this.tr = {
 			init() {
