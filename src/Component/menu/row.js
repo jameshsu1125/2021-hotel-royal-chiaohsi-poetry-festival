@@ -106,7 +106,7 @@ export default class row extends React.Component {
 		this.refs.main.addEventListener('touchend', (e) => {
 			if (Math.abs(pxy.clientX - mxy.clientX) < 5 && Math.abs(pxy.clientY - mxy.clientY) < 5) {
 				Gtag.event('Menu', this.data[this.props.index].title);
-				if (fbq) fbq('track', `row${this.props.index}`);
+				if (fbq) fbq('trackCustom', `menu`, { article: this.data[this.props.index].title });
 				let time = 1;
 				if (this.props.index == 13) time = 300;
 				setTimeout(() => {
