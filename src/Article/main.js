@@ -230,12 +230,33 @@ export default class main extends React.Component {
 	fb_share() {
 		let u = Hash.root() + `share/poetry_${this.props.index}.html`;
 		Gtag.event(`${this.props.data.title}_內文`, 'Facebook分享');
+
+		let d = [
+			'告別 ◎ 向陽',
+			'鹽的告別 ◎ 鴻鴻',
+			'不去可惜那些 ◎ 任明信',
+			'我的海 ◎ 宋尚緯 ',
+			'春天 ◎ 羅智成',
+			'不言不語 ◎ 曹尼',
+			'賦別 ◎ 鄭愁予',
+			'許願 ◎ 余光中',
+			'不需要一個一個說過再見 ◎ 徐珮芬',
+			'明天就要成為更好的人 ◎ 潘柏霖',
+			'時間與鹽 ◎ 林婉瑜',
+			'某個清晨你醒來 ◎ 何景窗',
+		][this.props.index];
+
+		let q = d + '\n\n';
+		this.props.data.body.filter((i) => {
+			q += i + '\n';
+		});
+
 		setTimeout(() => {
 			Facebook.share({
 				id: '2452563928384846',
-				redirect_uri: Hash.root(),
 				url: u,
 				hashtag: '老爺詩歌節道別與鹽',
+				quote: q,
 			});
 		}, 300);
 	}

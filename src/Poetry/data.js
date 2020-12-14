@@ -3,6 +3,7 @@ module.exports = [
 		//0
 		title: '告別',
 		sub: require('./img/0/poet.png'),
+		name: '向陽',
 		body: [
 			'撒一把鹽',
 			'在天與地之間',
@@ -26,6 +27,7 @@ module.exports = [
 		//1
 		title: '鹽的告別',
 		sub: require('./img/1/poet.png'),
+		name: '鴻鴻',
 		body: [
 			'不管被打造成粗礪',
 			'或精細',
@@ -57,6 +59,7 @@ module.exports = [
 		//2
 		title: '不去可惜那些',
 		sub: require('./img/2/poet.png'),
+		name: '任明信',
 		body: [
 			'柵欄裡的牛',
 			'看著同伴遠去',
@@ -98,6 +101,7 @@ module.exports = [
 		// 3
 		title: '我的海',
 		sub: require('./img/3/poet.png'),
+		name: '宋尚緯',
 		body: [
 			'你走了以後',
 			'那些悲傷的語言',
@@ -137,6 +141,7 @@ module.exports = [
 		// 4
 		title: '春天',
 		sub: require('./img/4/poet.png'),
+		name: '羅智成',
 		body: [
 			'叮叮叮叮叮叮，',
 			'叮時光的平交道叮叮叮叮叮叮',
@@ -174,6 +179,7 @@ module.exports = [
 		// 5
 		title: '不言不語',
 		sub: require('./img/5/poet.png'),
+		name: '曹尼',
 		body: [
 			'對折再對折',
 			'這世界佈滿摺痕',
@@ -201,6 +207,7 @@ module.exports = [
 		// 6
 		title: '賦別',
 		sub: require('./img/6/poet.png'),
+		name: '鄭愁予',
 		body: [
 			'這次我離開你，',
 			'是風，是雨，是夜晚；',
@@ -247,6 +254,7 @@ module.exports = [
 		// 7
 		title: '許願',
 		sub: require('./img/7/poet.png'),
+		name: '余光中',
 		body: [
 			'讓所有的鳥都恢復自由',
 			'　回到透明的天空',
@@ -283,6 +291,7 @@ module.exports = [
 		// 8
 		title: '不需要一個一個說過再見',
 		sub: require('./img/8/poet.png'),
+		name: '徐珮芬',
 		body: [
 			'拉開窗簾之前',
 			'才突然想起來',
@@ -309,6 +318,7 @@ module.exports = [
 		// 9
 		title: '明天就要成為<br />更好的人',
 		sub: require('./img/9/poet.png'),
+		name: '潘柏霖',
 		body: [
 			'我決定從今天',
 			'找到一個人',
@@ -346,6 +356,7 @@ module.exports = [
 		// 10
 		title: '時間與鹽',
 		sub: require('./img/10/poet.png'),
+		name: '林婉瑜',
 		body: [
 			'在故事開頭埋下種子',
 			'尾聲時長出一棵樹',
@@ -381,6 +392,7 @@ module.exports = [
 		// 11
 		title: '某個清晨<br />你醒來',
 		sub: require('./img/11/poet.png'),
+		name: '何景窗',
 		body: [
 			'清晨你醒來',
 			'豆莢裡的豌豆是你',
