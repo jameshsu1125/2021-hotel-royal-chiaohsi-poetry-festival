@@ -7,14 +7,12 @@ require('jquery-easing');
 var ClipboardJS = require('clipboard');
 import ReactHtmlParser from 'react-html-parser';
 
-import { Facebook, Line, Hash } from 'lesca';
+import { Facebook, Line, Hash, Gtag } from 'lesca';
 
 export default class main extends React.Component {
 	constructor(props) {
 		super(props);
 		const root = this;
-
-		let t = this.props.data.body.toString().split(',').join('　');
 
 		this.gap = 2000;
 		this.ctxGap = 75;
@@ -172,8 +170,9 @@ export default class main extends React.Component {
 				},
 			});
 
-			this.clipboard.on('success', function (e) {
+			this.clipboard.on('success', (e) => {
 				alert('網址已複製');
+				Gtag.event(`${this.props.data.title}_內文`, 'Line分享');
 			});
 
 			this.clipboard.on('error', function (e) {
@@ -199,6 +198,8 @@ export default class main extends React.Component {
 		let h = 1453 + this.props.data.body.length * this.ctxGap;
 		main.css('height', h + 'px');
 		this.tr.scrollUp();
+
+		Gtag.pv(`${this.props.data.title}_內文`);
 	}
 
 	line_share() {
@@ -218,17 +219,30 @@ export default class main extends React.Component {
 			'某個清晨你醒來 ◎ 何景窗',
 		][this.props.index];
 		let t = this.props.data.body.toString().split(',').join('\n');
-		Line.share(u, d + '\n\n' + t);
+
+		Gtag.event(`${this.props.data.title}_內文`, 'Line分享');
+
+		setTimeout(() => {
+			Line.share(u, d + '\n\n' + t);
+		}, 300);
 	}
 
 	fb_share() {
 		let u = Hash.root() + `share/poetry_${this.props.index}.html`;
-		Facebook.share({
-			id: '2452563928384846',
-			redirect_uri: Hash.root(),
-			url: u,
-			hashtag: '老爺詩歌節道別與鹽',
-		});
+		Gtag.event(`${this.props.data.title}_內文`, 'Facebook分享');
+		setTimeout(() => {
+			Facebook.share({
+				id: '2452563928384846',
+				redirect_uri: Hash.root(),
+				url: u,
+				hashtag: '老爺詩歌節道別與鹽',
+			});
+		}, 300);
+	}
+
+	next_poetry() {
+		this.props.next();
+		Gtag.event(`${this.props.data.title}_內文`, '讀下一首');
 	}
 
 	render() {
@@ -248,7 +262,7 @@ export default class main extends React.Component {
 					<div className='line' onClick={this.line_share.bind(this)}></div>
 					<div className='link'></div>
 				</div>
-				<div ref='btn' onClick={this.props.next} className='btn-container'>
+				<div ref='btn' onClick={this.next_poetry.bind(this)} className='btn-container'>
 					<div className='corner'>
 						<div></div>
 						<div></div>

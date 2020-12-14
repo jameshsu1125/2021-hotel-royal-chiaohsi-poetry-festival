@@ -6,6 +6,7 @@ import Headline from './headline';
 import Article from './../Article/main';
 
 import Data from './data';
+import { Gtag } from 'lesca';
 
 import $ from 'jquery';
 require('jquery-easing');
@@ -24,6 +25,8 @@ export default class poetry extends React.Component {
 		$('html, body').scrollTop(0);
 		this.refs.main.style.display = 'block';
 		this.refs.headline.in();
+
+		Gtag.pv(`${this.state.article.title}_詩作`);
 	}
 
 	update_uPy(dy) {
@@ -38,6 +41,7 @@ export default class poetry extends React.Component {
 		this.refs.headline.scrollUp();
 		this.refs.article.scrollUp();
 		this.props.bg_blur();
+		Gtag.event(`${this.state.article.title}_詩作`, '向上滑');
 		//this.tr.bg.blur();
 	}
 

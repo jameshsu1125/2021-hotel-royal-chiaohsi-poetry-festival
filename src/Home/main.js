@@ -5,7 +5,7 @@ import $ from 'jquery';
 require('jquery-easing');
 require('jquery.waitforimages');
 
-import { Motion, UserAgent } from 'lesca';
+import { Motion, UserAgent, Gtag } from 'lesca';
 
 export default class content extends React.Component {
 	constructor(props) {
@@ -113,6 +113,7 @@ export default class content extends React.Component {
 						} else {
 							root.tr.out();
 						}
+						Gtag.event('首頁', '點擊螢幕 灑出道別詩作');
 					});
 				},
 			},
@@ -440,6 +441,7 @@ export default class content extends React.Component {
 
 	in(fn) {
 		this.tr.in(fn);
+		Gtag.pv('首頁');
 	}
 
 	out() {

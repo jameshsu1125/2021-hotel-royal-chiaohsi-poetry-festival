@@ -3,12 +3,15 @@ import React from 'react';
 import $ from 'jquery';
 require('jquery-easing');
 
-import { LocalStorage } from 'lesca';
+import { LocalStorage, Gtag } from 'lesca';
+import Data from './../../Poetry/data';
 
 export default class row extends React.Component {
 	constructor(props) {
 		super(props);
 		const root = this;
+
+		this.data = [...Data, { title: '關於道別' }, { title: '到老爺看完整詩展' }];
 
 		this.tr = {
 			init() {
@@ -102,7 +105,12 @@ export default class row extends React.Component {
 		);
 		this.refs.main.addEventListener('touchend', (e) => {
 			if (Math.abs(pxy.clientX - mxy.clientX) < 5 && Math.abs(pxy.clientY - mxy.clientY) < 5) {
-				this.props.clicked(this.props.index);
+				Gtag.event('Menu', this.data[this.props.index].title);
+				let time = 1;
+				if (this.props.index == 13) time = 300;
+				setTimeout(() => {
+					this.props.clicked(this.props.index);
+				}, time);
 			}
 		});
 	}

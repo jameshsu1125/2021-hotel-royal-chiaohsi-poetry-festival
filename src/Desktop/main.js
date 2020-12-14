@@ -1,7 +1,7 @@
 import React from 'react';
 import './main.less';
 
-import { UserAgent, Hash } from 'lesca';
+import { UserAgent, Hash, Http2Https, Gtag } from 'lesca';
 import Qr from 'lesca/lib/Qrcode';
 
 import $ from 'jquery';
@@ -15,6 +15,8 @@ export default class main extends React.Component {
 		const root = this;
 
 		if (UserAgent.get() === 'mobile') window.location.replace(Hash.root());
+		Http2Https.go();
+		Gtag.install('UA-20404972-1');
 
 		this.tr = {
 			init() {
@@ -226,6 +228,8 @@ export default class main extends React.Component {
 			each: (e) => {},
 			waitForAll: true,
 		});
+
+		Gtag.pv('桌機版');
 	}
 
 	render() {

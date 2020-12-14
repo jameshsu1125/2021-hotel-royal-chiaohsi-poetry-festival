@@ -5,6 +5,8 @@ import $ from 'jquery';
 require('jquery-easing');
 require('jquery.waitforimages');
 
+import { Gtag } from 'lesca';
+
 import Row from './row';
 
 export default class menu extends React.Component {
@@ -64,6 +66,7 @@ export default class menu extends React.Component {
 
 					root.setState({ content: true }, () => {
 						TouchEvent.preventDefault = false;
+						Gtag.pv(`Menu`);
 					});
 
 					$(this).animate(

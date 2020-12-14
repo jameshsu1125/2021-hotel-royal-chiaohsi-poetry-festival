@@ -1,6 +1,8 @@
 import React from 'react';
 import './main.less';
 
+import { Gtag } from 'lesca';
+
 import $ from 'jquery';
 require('jquery-easing');
 require('jquery.waitforimages');
@@ -94,6 +96,7 @@ export default class main extends React.Component {
 		this.setTop();
 		this.refs.main.style.display = 'block';
 		this.tr.in();
+		Gtag.pv('關於道別與鹽');
 	}
 
 	render() {

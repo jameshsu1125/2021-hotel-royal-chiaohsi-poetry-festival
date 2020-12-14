@@ -5,7 +5,7 @@ import Loading from './../Loading/main';
 import Menu from './../Component/menu/main';
 import Home from './../Home/main';
 import Poetry from './../Poetry/main';
-import { TouchEvent, LocalStorage, UserAgent, Hash, Facebook } from 'lesca';
+import { TouchEvent, LocalStorage, UserAgent, Hash, Facebook, Http2Https, Gtag } from 'lesca';
 import Canvas3D from './../Canvas3d/main';
 import Touch from './touch';
 import Background from './background';
@@ -18,12 +18,12 @@ export default class main extends React.Component {
 		super(props);
 
 		this.state = { home: false, loading: false, poetry: false, preload: false, about: false };
-
 		if (UserAgent.get() === 'desktop') window.location.replace(Hash.root() + 'desktop.html');
-
 		TouchEvent.init();
-		this.data;
+		Http2Https.go();
+		Gtag.install('UA-20404972-1');
 
+		this.data;
 		if (LocalStorage.get('data') == null || LocalStorage.get('data') == undefined) {
 			let d = [];
 			for (let i = 0; i < 12; i++) {
@@ -106,6 +106,7 @@ export default class main extends React.Component {
 
 	loading_ready() {
 		this.setState({ home: true, menu: true, poetry: true, preload: true, about: true });
+		Gtag.pv('Loading');
 	}
 
 	loading_finished() {
