@@ -281,7 +281,7 @@ module.exports = [
 	},
 	{
 		// 8
-		title: '不需要一個一個過再見',
+		title: '不需要一個一個說過再見',
 		sub: require('./img/8/poet.png'),
 		body: [
 			'拉開窗簾之前',
