@@ -1,7 +1,7 @@
 module.exports = {
 	Loader: {
 		index: 0,
-		max: 96,
+		max: 97,
 		add() {
 			this.index++;
 
@@ -16,4 +16,5 @@ module.exports = {
 			console.log('end');
 		},
 	},
+	Sensor_g: 20,
 };

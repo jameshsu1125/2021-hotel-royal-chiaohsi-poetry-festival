@@ -7,7 +7,8 @@ require('jquery-easing');
 var ClipboardJS = require('clipboard');
 import ReactHtmlParser from 'react-html-parser';
 
-import { Facebook, Line, Hash, Gtag } from 'lesca';
+import { Facebook, Line, Hash, Gtag, Motion } from 'lesca';
+import { Sensor_g } from './../Component/config';
 
 export default class main extends React.Component {
 	constructor(props) {
@@ -41,10 +42,21 @@ export default class main extends React.Component {
 						.stop()
 						.animate({ scrollTop: h }, 4 * root.ctx_each_scroll_time, 'easeInOutExpo');
 				}
+
 				TouchEvent.add('#article', () => {
 					TouchEvent.remove('#article');
 					$('html, body').stop();
 				});
+
+				if (Motion.ready) {
+					Motion.disable = true;
+					Motion.addEvent(Sensor_g, (e) => {
+						Motion.disable = false;
+						root.next_poetry();
+					});
+				} else {
+					$(root.refs.txt).addClass('return-home');
+				}
 			},
 			title: {
 				y: 300,
@@ -138,7 +150,8 @@ export default class main extends React.Component {
 					target.css(this.p);
 					this.sync = () => {
 						if (this.is) return;
-						let t = $('html, body').scrollTop();
+						let t = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+
 						let p = target.position().top - 300;
 						if (t >= p) {
 							this.is = true;
@@ -162,11 +175,13 @@ export default class main extends React.Component {
 
 	componentDidMount() {
 		this.tr.init();
+		const root = this;
 
 		if (ClipboardJS.isSupported()) {
 			this.clipboard = new ClipboardJS('.link', {
 				text: function (trigger) {
-					return Hash.root();
+					let u = Hash.root() + `share/poetry_${root.props.index}.html`;
+					return u;
 				},
 			});
 
@@ -187,6 +202,7 @@ export default class main extends React.Component {
 	componentWillUnmount() {
 		$('html, body').stop();
 		if (this.clipboard) this.clipboard.destroy();
+		if (Motion.ready) Motion.destory();
 	}
 
 	append_body() {
@@ -266,6 +282,15 @@ export default class main extends React.Component {
 		Gtag.event(`${this.props.data.title}_內文`, '讀下一首');
 	}
 
+	next_poetry_debug() {
+		if (window.location.hostname === 'localhost') {
+			this.next_poetry();
+		}
+		if (!Motion.ready) {
+			Hash.removeAndGo('id');
+		}
+	}
+
 	render() {
 		return (
 			<div ref='main' id='article'>
@@ -283,13 +308,13 @@ export default class main extends React.Component {
 					<div className='line' onClick={this.line_share.bind(this)}></div>
 					<div className='link'></div>
 				</div>
-				<div ref='btn' onClick={this.next_poetry.bind(this)} className='btn-container'>
+				<div ref='btn' onClick={this.next_poetry_debug.bind(this)} className='btn-container'>
 					<div className='corner'>
 						<div></div>
 						<div></div>
 						<div></div>
 					</div>
-					<div className='txt'></div>
+					<div ref='txt' className='txt'></div>
 					<div className='corner'>
 						<div></div>
 						<div></div>

@@ -150,32 +150,68 @@ export default class main extends React.Component {
 						</p>
 
 						<div className='video'>
-							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
+							<iframe
+								width='600'
+								height='338'
+								src='https://www.youtube.com/embed/qZiSbBHMoYs?controls=0'
+								frameBorder='0'
+								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen></iframe>
 						</div>
 						<div className='video_desc d0'></div>
 
 						<div className='video'>
-							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
+							<iframe
+								width='600'
+								height='338'
+								src='https://www.youtube.com/embed/0JGHAQEQCrM?controls=0'
+								frameBorder='0'
+								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen></iframe>
 						</div>
 						<div className='video_desc d1'></div>
 
 						<div className='video'>
-							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
+							<iframe
+								width='600'
+								height='338'
+								src='https://www.youtube.com/embed/tcO7WugjbPc?controls=0'
+								frameBorder='0'
+								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen></iframe>
 						</div>
 						<div className='video_desc d2'></div>
 
 						<div className='video'>
-							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
+							<iframe
+								width='600'
+								height='338'
+								src='https://www.youtube.com/embed/oyWr5vc64WE?controls=0'
+								frameBorder='0'
+								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen></iframe>
 						</div>
 						<div className='video_desc d3'></div>
 
 						<div className='video'>
-							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
+							<iframe
+								width='600'
+								height='338'
+								src='https://www.youtube.com/embed/HtqCo3CGK8s?controls=0'
+								frameBorder='0'
+								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen></iframe>
 						</div>
 						<div className='video_desc d4'></div>
 
 						<div className='video'>
-							<div class='fb-video' data-href='https://www.facebook.com/facebook/videos/10153231379946729/' data-show-text='false' data-width=''></div>
+							<iframe
+								width='600'
+								height='338'
+								src='https://www.youtube.com/embed/sV-GIk8sAaQ?controls=0'
+								frameBorder='0'
+								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen></iframe>
 						</div>
 						<div className='video_desc d5'></div>
 					</div>

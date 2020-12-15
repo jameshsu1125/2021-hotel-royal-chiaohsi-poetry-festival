@@ -6,10 +6,13 @@ require('jquery-easing');
 require('jquery.waitforimages');
 
 import { Motion, UserAgent, Gtag } from 'lesca';
+import Enter from './enter';
+import { Sensor_g } from './../Component/config';
 
 export default class content extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = { enter: true };
 		const root = this;
 		this.tr = {
 			s: 1,
@@ -27,7 +30,6 @@ export default class content extends React.Component {
 				this.btn.init();
 			},
 			in(fn) {
-				root.refs.main.style.display = 'block';
 				this.t0.in();
 				this.t1.in();
 				this.t2.in();
@@ -39,7 +41,6 @@ export default class content extends React.Component {
 				this.btn.in(fn);
 			},
 			out() {
-				TouchEvent.remove('.btn-container');
 				root.props.enter();
 
 				$(this)
@@ -102,19 +103,24 @@ export default class content extends React.Component {
 					});
 				},
 				evt() {
-					TouchEvent.add('.btn-container', () => {
-						if (UserAgent.get() == 'mobile' && window.location.protocol == 'https') {
-							Motion.init({
-								callback: (e) => {
-									Motion.distory();
-									root.tr.out();
-								},
-							});
-						} else {
+					if (Motion.ready) {
+						Motion.addEvent(Sensor_g, (e) => {
+							console.log(Motion.disable);
+							Motion.disable = false;
 							root.tr.out();
-						}
-						Gtag.event('首頁', '點擊螢幕 灑出道別詩作');
-					});
+							Gtag.event('首頁', '點擊螢幕 灑出道別詩作');
+						});
+					}
+
+					//? debug
+
+					if (window.location.hostname === 'localhost') {
+						TouchEvent.add('.btn-container', () => {
+							TouchEvent.remove('.btn-container');
+							root.tr.out();
+							Gtag.event('首頁', '點擊螢幕 灑出道別詩作');
+						});
+					}
 				},
 			},
 			title2: {
@@ -440,12 +446,29 @@ export default class content extends React.Component {
 	}
 
 	in(fn) {
-		this.tr.in(fn);
-		Gtag.pv('首頁');
+		this.fn = fn;
+		this.refs.main.style.display = 'block';
+		if (this.refs.enter) this.refs.enter.in();
+		Gtag.pv('介紹頁');
 	}
 
 	out() {
 		this.tr.out();
+	}
+
+	enter_destory() {
+		this.setState({ enter: false });
+	}
+
+	enter_out() {
+		setTimeout(() => {
+			this.tr.in(this.fn);
+		}, 500);
+		Gtag.pv('首頁');
+	}
+
+	append_enter() {
+		if (this.state.enter) return <Enter ref='enter' out={this.enter_out.bind(this)} destory={this.enter_destory.bind(this)} />;
 	}
 
 	render() {
@@ -480,6 +503,7 @@ export default class content extends React.Component {
 						</div>
 					</div>
 				</div>
+				{this.append_enter()}
 			</div>
 		);
 	}

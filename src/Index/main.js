@@ -42,6 +42,9 @@ export default class main extends React.Component {
 		let unread = this.data.filter((i) => !i.readed);
 		if (unread.length == 0) this.unread_index = this.data[Math.floor(Math.random() * this.data.length)].index;
 		else this.unread_index = unread[Math.floor(Math.random() * unread.length)].index;
+
+		if (parseInt(Hash.get('id')) >= 0) this.unread_index = parseInt(Hash.get('id'));
+		if (this.unread_index > 11 || isNaN(this.unread_index)) this.unread_index = this.data[Math.floor(Math.random() * this.data.length)].index;
 		// ! debug this.unread_index = 6;
 
 		// init webGL
@@ -110,11 +113,20 @@ export default class main extends React.Component {
 	}
 
 	loading_finished() {
-		this.setState({ loading: false, poetry: false, preload: false, about: false }, () => {
-			this.refs.home.in(() => {
-				this.refs.menu.in();
+		// ! hashtag loaded here
+		if (parseInt(Hash.get('id')) >= 0) {
+			this.setState({ home: false, loading: false, poetry: true, preload: false, about: false }, () => {
+				this.refs.poetry.in(true);
+				this.refs.touch.show();
+				this.refs.bg.in(this.unread_index);
 			});
-		});
+		} else {
+			this.setState({ loading: false, poetry: false, preload: false, about: false }, () => {
+				this.refs.home.in(() => {
+					this.refs.menu.in();
+				});
+			});
+		}
 	}
 
 	append_loading() {
@@ -154,6 +166,8 @@ export default class main extends React.Component {
 					this.refs.about.in();
 				});
 			}
+		} else if (v == 13) {
+			window.location.href = 'https://m.hotelroyal.com.tw/chiaohsi/news.aspx?no=3262';
 		}
 	}
 
