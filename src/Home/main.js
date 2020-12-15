@@ -108,7 +108,7 @@ export default class content extends React.Component {
 							console.log(Motion.disable);
 							Motion.disable = false;
 							root.tr.out();
-							Gtag.event('首頁', '點擊螢幕 灑出道別詩作');
+							Gtag.event('首頁', '甩動手機 灑出道別詩作');
 						});
 					}
 
@@ -118,7 +118,7 @@ export default class content extends React.Component {
 						TouchEvent.add('.btn-container', () => {
 							TouchEvent.remove('.btn-container');
 							root.tr.out();
-							Gtag.event('首頁', '點擊螢幕 灑出道別詩作');
+							Gtag.event('首頁', '甩動手機 灑出道別詩作');
 						});
 					}
 				},

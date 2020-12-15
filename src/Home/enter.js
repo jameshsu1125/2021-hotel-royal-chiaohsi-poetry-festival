@@ -4,7 +4,7 @@ import './enter.less';
 import $ from 'jquery';
 require('jquery-easing');
 
-import { Motion } from 'lesca';
+import { Motion, Gtag } from 'lesca';
 
 export default class enter extends React.Component {
 	constructor(props) {
@@ -129,6 +129,7 @@ export default class enter extends React.Component {
 	sensor_asked() {
 		Motion.init(() => {
 			TouchEvent.preventDefault = true;
+			Gtag.event('介紹頁', '點擊開始道別儀式');
 			this.tr.out();
 		});
 	}

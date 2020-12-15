@@ -11,6 +11,7 @@ export default class main extends React.Component {
 	constructor(props) {
 		super(props);
 		const root = this;
+		this.state = { video: false };
 		this.tr = {
 			init() {
 				this.logo.init();
@@ -61,6 +62,9 @@ export default class main extends React.Component {
 							complete: () => {
 								this.tran();
 								TouchEvent.preventDefault = false;
+								root.setState({
+									video: ['qZiSbBHMoYs', '0JGHAQEQCrM', 'tcO7WugjbPc', 'oyWr5vc64WE', 'HtqCo3CGK8s', 'sV-GIk8sAaQ'],
+								});
 							},
 							easing: 'easeOutQuart',
 						}
@@ -97,6 +101,26 @@ export default class main extends React.Component {
 		this.refs.main.style.display = 'block';
 		this.tr.in();
 		Gtag.pv('關於道別與鹽');
+	}
+
+	append_video() {
+		if (this.state.video)
+			return this.state.video.map((i, index) => {
+				return (
+					<div key={index}>
+						<div className='video'>
+							<iframe
+								width='600'
+								height='338'
+								src={`https://www.youtube.com/embed/${i}?controls=0`}
+								frameBorder='0'
+								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen></iframe>
+						</div>
+						<div className={`video_desc d${index}`}></div>
+					</div>
+				);
+			});
 	}
 
 	render() {
@@ -148,72 +172,7 @@ export default class main extends React.Component {
 							<br />
 							迎向明天。
 						</p>
-
-						<div className='video'>
-							<iframe
-								width='600'
-								height='338'
-								src='https://www.youtube.com/embed/qZiSbBHMoYs?controls=0'
-								frameBorder='0'
-								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								allowFullScreen></iframe>
-						</div>
-						<div className='video_desc d0'></div>
-
-						<div className='video'>
-							<iframe
-								width='600'
-								height='338'
-								src='https://www.youtube.com/embed/0JGHAQEQCrM?controls=0'
-								frameBorder='0'
-								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								allowFullScreen></iframe>
-						</div>
-						<div className='video_desc d1'></div>
-
-						<div className='video'>
-							<iframe
-								width='600'
-								height='338'
-								src='https://www.youtube.com/embed/tcO7WugjbPc?controls=0'
-								frameBorder='0'
-								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								allowFullScreen></iframe>
-						</div>
-						<div className='video_desc d2'></div>
-
-						<div className='video'>
-							<iframe
-								width='600'
-								height='338'
-								src='https://www.youtube.com/embed/oyWr5vc64WE?controls=0'
-								frameBorder='0'
-								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								allowFullScreen></iframe>
-						</div>
-						<div className='video_desc d3'></div>
-
-						<div className='video'>
-							<iframe
-								width='600'
-								height='338'
-								src='https://www.youtube.com/embed/HtqCo3CGK8s?controls=0'
-								frameBorder='0'
-								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								allowFullScreen></iframe>
-						</div>
-						<div className='video_desc d4'></div>
-
-						<div className='video'>
-							<iframe
-								width='600'
-								height='338'
-								src='https://www.youtube.com/embed/sV-GIk8sAaQ?controls=0'
-								frameBorder='0'
-								allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								allowFullScreen></iframe>
-						</div>
-						<div className='video_desc d5'></div>
+						{this.append_video()}
 					</div>
 				</div>
 				<div className='row'>
