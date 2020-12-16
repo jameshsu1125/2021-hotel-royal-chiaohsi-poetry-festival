@@ -81,6 +81,9 @@ export default class content extends React.Component {
 					this.tran();
 				},
 				in(fn) {
+					if (window.denied) {
+						$(root.refs.txt).addClass('by-click');
+					}
 					$(this)
 						.delay(this.delay.in)
 						.animate(
@@ -105,22 +108,16 @@ export default class content extends React.Component {
 				evt() {
 					if (Motion.ready) {
 						Motion.addEvent(Sensor_g, (e) => {
-							console.log(Motion.disable);
 							Motion.disable = false;
 							root.tr.out();
 							Gtag.event('首頁', '甩動手機 灑出道別詩作');
 						});
 					}
-
-					//? debug
-
-					if (window.location.hostname === 'localhost') {
-						TouchEvent.add('.btn-container', () => {
-							TouchEvent.remove('.btn-container');
-							root.tr.out();
-							Gtag.event('首頁', '甩動手機 灑出道別詩作');
-						});
-					}
+					TouchEvent.add('.btn-container', () => {
+						TouchEvent.remove('.btn-container');
+						root.tr.out();
+						Gtag.event('首頁', '甩動手機 灑出道別詩作');
+					});
 				},
 			},
 			title2: {
@@ -495,7 +492,7 @@ export default class content extends React.Component {
 							<div></div>
 							<div></div>
 						</div>
-						<div className='txt'></div>
+						<div ref='txt' className='txt'></div>
 						<div className='corner'>
 							<div></div>
 							<div></div>

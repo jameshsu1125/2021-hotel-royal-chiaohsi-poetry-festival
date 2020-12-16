@@ -119,6 +119,7 @@ export default class enter extends React.Component {
 	}
 
 	componentDidMount() {
+		window.denied = false;
 		this.tr.init();
 	}
 
@@ -127,11 +128,18 @@ export default class enter extends React.Component {
 	}
 
 	sensor_asked() {
-		Motion.init(() => {
-			TouchEvent.preventDefault = true;
-			Gtag.event('介紹頁', '點擊開始道別儀式');
-			this.tr.out();
-		});
+		Motion.init(
+			() => {
+				TouchEvent.preventDefault = true;
+				this.tr.out();
+			},
+			() => {
+				TouchEvent.preventDefault = true;
+				window.denied = true;
+				this.tr.out();
+			}
+		);
+		Gtag.event('介紹頁', '點擊開始道別儀式');
 	}
 
 	render() {

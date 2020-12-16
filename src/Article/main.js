@@ -30,6 +30,9 @@ export default class main extends React.Component {
 			scrollUp() {
 				this.title.scrollUp();
 				this.sub.scrollUp();
+				if (window.denied) {
+					$(root.refs.txt).addClass('next-by-click');
+				}
 			},
 			evt() {
 				this.scroll = () => {
@@ -239,7 +242,7 @@ export default class main extends React.Component {
 		Gtag.event(`${this.props.data.title}_內文`, 'Line分享');
 
 		setTimeout(() => {
-			Line.share(u, d + '\n\n' + t);
+			Line.share(u, d + '\n\n' + t + '\n');
 		}, 300);
 	}
 
@@ -283,12 +286,8 @@ export default class main extends React.Component {
 	}
 
 	next_poetry_debug() {
-		if (window.location.hostname === 'localhost') {
-			this.next_poetry();
-		}
-		if (!Motion.ready) {
-			Hash.removeAndGo('id');
-		}
+		if (!Motion.ready) Hash.removeAndGo('id');
+		else this.next_poetry();
 	}
 
 	render() {

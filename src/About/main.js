@@ -63,7 +63,7 @@ export default class main extends React.Component {
 								this.tran();
 								TouchEvent.preventDefault = false;
 								root.setState({
-									video: ['qZiSbBHMoYs', '0JGHAQEQCrM', 'tcO7WugjbPc', 'oyWr5vc64WE', 'HtqCo3CGK8s', 'sV-GIk8sAaQ'],
+									video: ['qZiSbBHMoYs', '0JGHAQEQCrM', 'tcO7WugjbPc', 'oyWr5vc64WE', 'sV-GIk8sAaQ', 'HtqCo3CGK8s'],
 								});
 							},
 							easing: 'easeOutQuart',

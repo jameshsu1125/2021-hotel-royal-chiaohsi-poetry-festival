@@ -34,13 +34,20 @@
 		font-size: 40px;
 
 		& > div {
-			width: 130%;
+			width: 135%;
 			position: absolute;
 		}
 	}
 
 	.return-home {
 		@img: './img/return.png';
+		background-image: url(@img) !important;
+		width: image-width(@img) !important;
+		height: image-height(@img) !important;
+	}
+
+	.next-by-click {
+		@img: './img/next-by-click.png';
 		background-image: url(@img) !important;
 		width: image-width(@img) !important;
 		height: image-height(@img) !important;
