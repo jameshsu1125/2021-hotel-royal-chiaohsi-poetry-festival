@@ -136,7 +136,7 @@ export default class menu extends React.Component {
 
 	append_row() {
 		let op = [];
-		for (var i = 0; i < 14; i++) {
+		for (var i = 0; i < 15; i++) {
 			op.push(<Row ref={'row' + i} key={i} index={i} clicked={this.clicked.bind(this)} />);
 		}
 		return op;

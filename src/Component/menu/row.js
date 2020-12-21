@@ -108,7 +108,7 @@ export default class row extends React.Component {
 				Gtag.event('Menu', this.data[this.props.index].title);
 				if (fbq) fbq('trackCustom', `row${this.props.index}`, { article: this.data[this.props.index].title });
 				let time = 1;
-				if (this.props.index == 13) time = 300;
+				if (this.props.index == 14) time = 300;
 				setTimeout(() => {
 					this.props.clicked(this.props.index);
 				}, time);

@@ -12,12 +12,13 @@ import Background from './background';
 import { Landscape } from 'lesca/lib/UI';
 import Preload from './preload';
 import About from './../About/main';
+import Write from './../Write/main';
 
 export default class main extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { home: false, loading: false, poetry: false, preload: false, about: false };
+		this.state = { home: false, loading: false, poetry: false, preload: false, about: false, write: false };
 		if (UserAgent.get() === 'desktop') window.location.replace(Hash.root() + 'desktop.html');
 		TouchEvent.init();
 		Http2Https.go();
@@ -64,6 +65,13 @@ export default class main extends React.Component {
 		 */
 
 		this.setState({ loading: true });
+
+		return;
+
+		this.setState({ write: true }, () => {
+			this.refs.write.in();
+		});
+
 		return;
 
 		this.setState({ poetry: true, menu: true }, () => {
@@ -78,7 +86,7 @@ export default class main extends React.Component {
 	}
 
 	home_enter() {
-		if (!this.state.about) {
+		if (!this.state.about && !this.state.write) {
 			this.setState({ poetry: true }, () => {
 				this.refs.poetry.in();
 				this.refs.touch.show();
@@ -86,7 +94,8 @@ export default class main extends React.Component {
 			});
 		} else {
 			setTimeout(() => {
-				this.refs.about.in();
+				if (this.refs.about) this.refs.about.in();
+				if (this.refs.write) this.refs.write.in();
 			}, 500);
 		}
 	}
@@ -108,14 +117,14 @@ export default class main extends React.Component {
 	}
 
 	loading_ready() {
-		this.setState({ home: true, menu: true, poetry: true, preload: true, about: true });
+		this.setState({ home: true, menu: true, poetry: true, preload: true, about: true, write: true });
 		Gtag.pv('Loading');
 	}
 
 	loading_finished() {
 		// ! hashtag loaded here
 		if (parseInt(Hash.get('id')) >= 0) {
-			this.setState({ home: false, loading: false, poetry: true, preload: false, about: false }, () => {
+			this.setState({ home: false, loading: false, poetry: true, preload: false, about: false, write: false }, () => {
 				this.refs.poetry.in(true);
 				this.refs.touch.show();
 				this.refs.bg.in(this.unread_index);
@@ -148,7 +157,7 @@ export default class main extends React.Component {
 			if (this.state.home) {
 				this.refs.home.out();
 			} else {
-				this.setState({ poetry: false, about: false }, () => {
+				this.setState({ poetry: false, about: false, write: false }, () => {
 					this.setState({ poetry: true }, () => {
 						this.refs.poetry.in(true);
 						this.refs.touch.show();
@@ -158,15 +167,25 @@ export default class main extends React.Component {
 			}
 		} else if (v == 12) {
 			if (this.state.home) {
-				this.setState({ about: true }, () => {
+				this.setState({ about: true, write: false }, () => {
 					this.refs.home.out();
 				});
 			} else {
-				this.setState({ about: true, poetry: false }, () => {
+				this.setState({ about: true, poetry: false, write: false }, () => {
 					this.refs.about.in();
 				});
 			}
 		} else if (v == 13) {
+			if (this.state.home) {
+				this.setState({ write: true, about: false }, () => {
+					this.refs.home.out();
+				});
+			} else {
+				this.setState({ write: true, poetry: false, about: false }, () => {
+					this.refs.write.in();
+				});
+			}
+		} else if (v == 14) {
 			window.location.href = 'https://m.hotelroyal.com.tw/chiaohsi/news.aspx?no=3262';
 		}
 	}
@@ -208,6 +227,10 @@ export default class main extends React.Component {
 		if (this.state.about) return <About ref='about' update={this.loading_update.bind(this)} />;
 	}
 
+	append_write() {
+		if (this.state.write) return <Write ref='write' update={this.loading_update.bind(this)} />;
+	}
+
 	render() {
 		return (
 			<div ref='main' id='index'>
@@ -215,6 +238,7 @@ export default class main extends React.Component {
 				<Background ref='bg' loaded={this.background_loaded.bind(this)} />
 
 				{this.append_about()}
+				{this.append_write()}
 
 				{this.append_home()}
 				<div ref='content' className='content'>
