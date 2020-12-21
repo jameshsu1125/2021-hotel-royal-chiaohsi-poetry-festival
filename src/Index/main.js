@@ -130,7 +130,7 @@ export default class main extends React.Component {
 				this.refs.bg.in(this.unread_index);
 			});
 		} else {
-			this.setState({ loading: false, poetry: false, preload: false, about: false }, () => {
+			this.setState({ loading: false, poetry: false, preload: false, about: false, write: false }, () => {
 				this.refs.home.in(() => {
 					this.refs.menu.in();
 				});

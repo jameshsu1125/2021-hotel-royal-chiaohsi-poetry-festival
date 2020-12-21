@@ -97,12 +97,10 @@ export default class write extends React.Component {
 	}
 
 	next() {
-		console.log('aa');
 		this.refs.slider.slickNext();
 	}
 
 	prev() {
-		console.log('bb');
 		this.refs.slider.slickPrev();
 	}
 
