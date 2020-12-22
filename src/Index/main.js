@@ -144,8 +144,9 @@ export default class main extends React.Component {
 	next_poetry() {
 		TouchEvent.preventDefault = true;
 		let index = this.unread_index + 1;
+
 		if (index >= 12) index = 0;
-		this.menu_clicked(index);
+		this.menu_clicked(index + 2);
 	}
 
 	menu_clicked(v) {
