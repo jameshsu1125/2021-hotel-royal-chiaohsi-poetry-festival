@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Numbers } from 'lesca';
-import { GridHelper } from 'three';
 
 export default class page extends React.Component {
 	constructor(props) {
@@ -20,7 +19,9 @@ export default class page extends React.Component {
 		return (
 			<div className='page'>
 				<div className='number'>§{Numbers.Pad(this.props.index, 2)}</div>
-				<div className='type'>{this.props.data.type}</div>
+				<div ref='type' className='type'>
+					{this.props.data.type}
+				</div>
 				<div className='memtor'>{this.props.data.memtor}</div>
 				<div className='list'>{this.append()}</div>
 			</div>

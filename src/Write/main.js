@@ -11,6 +11,8 @@ import $ from 'jquery';
 require('jquery-easing');
 require('jquery.waitforimages');
 
+import { Gtag } from 'lesca';
+
 export default class write extends React.Component {
 	constructor(props) {
 		super(props);
@@ -80,6 +82,24 @@ export default class write extends React.Component {
 				},
 			},
 		};
+
+		this.gtag_index = {
+			index: 0,
+			max: 11,
+			add() {
+				this.index++;
+				if (this.index > this.max) this.index = 0;
+				this.tracking();
+			},
+			cut() {
+				this.index--;
+				if (this.index < 0) this.index = this.max;
+				this.tracking();
+			},
+			tracking() {
+				Gtag.event('寫道別詩的n種方法', Data[this.index].type);
+			},
+		};
 	}
 
 	componentDidMount() {
@@ -94,22 +114,31 @@ export default class write extends React.Component {
 	in() {
 		this.refs.main.style.display = 'block';
 		this.tr.in();
+		Gtag.pv('寫道別詩的n種方法');
+		Gtag.event('寫道別詩的n種方法', Data[0].type);
 	}
 
 	next() {
 		this.refs.slider.slickNext();
+		this.gtag_index.add();
 	}
 
 	prev() {
 		this.refs.slider.slickPrev();
+		this.gtag_index.cut();
 	}
 
 	append_page() {
 		let op = [];
 		for (var i = 1; i <= 12; i++) {
-			op.push(<Page key={i} data={Data[i - 1]} index={i} />);
+			op.push(<Page ref={`page_${i - 1}}`} key={i} data={Data[i - 1]} index={i} />);
 		}
 		return op;
+	}
+
+	onSwipe(e) {
+		if (e === 'left') this.gtag_index.add();
+		else this.gtag_index.cut();
 	}
 
 	render() {
@@ -117,7 +146,7 @@ export default class write extends React.Component {
 			<div ref='main' id='write'>
 				<div ref='bg' className='background'></div>
 				<div ref='ctx' className='ctx'>
-					<Slider ref='slider' draggable={true} arrows={false}>
+					<Slider ref='slider' onSwipe={this.onSwipe.bind(this)} draggable={true} arrows={false}>
 						{this.append_page()}
 					</Slider>
 				</div>

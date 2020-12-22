@@ -65,7 +65,6 @@ export default class main extends React.Component {
 		 */
 
 		this.setState({ loading: true });
-
 		return;
 
 		this.setState({ write: true }, () => {

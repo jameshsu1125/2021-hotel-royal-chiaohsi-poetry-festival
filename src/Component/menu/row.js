@@ -11,7 +11,7 @@ export default class row extends React.Component {
 		super(props);
 		const root = this;
 
-		this.data = [...Data, { title: '關於道別' }, { title: '到老爺看完整詩展' }];
+		this.data = [...Data, { title: '關於道別' }, { title: '寫道別詩的n種方法' }, { title: '到老爺看完整詩展' }];
 
 		this.tr = {
 			init() {
@@ -106,6 +106,7 @@ export default class row extends React.Component {
 		this.refs.main.addEventListener('touchend', (e) => {
 			if (Math.abs(pxy.clientX - mxy.clientX) < 5 && Math.abs(pxy.clientY - mxy.clientY) < 5) {
 				Gtag.event('Menu', this.data[this.props.index].title);
+
 				if (fbq) fbq('trackCustom', `row${this.props.index}`, { article: this.data[this.props.index].title });
 				let time = 1;
 				if (this.props.index == 14) time = 300;
