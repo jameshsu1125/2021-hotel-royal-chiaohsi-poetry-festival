@@ -149,9 +149,9 @@ export default class main extends React.Component {
 	}
 
 	menu_clicked(v) {
-		if (v < 12) {
-			this.unread_index = this.data[v].index;
-			this.data[v].readed = true;
+		if (v > 1 && v < 14) {
+			this.unread_index = this.data[v - 2].index;
+			this.data[v - 2].readed = true;
 			LocalStorage.set('data', JSON.stringify(this.data));
 			if (this.state.home) {
 				this.refs.home.out();
@@ -164,7 +164,7 @@ export default class main extends React.Component {
 					});
 				});
 			}
-		} else if (v == 12) {
+		} else if (v == 0) {
 			if (this.state.home) {
 				this.setState({ about: true, write: false }, () => {
 					this.refs.home.out();
@@ -174,7 +174,7 @@ export default class main extends React.Component {
 					this.refs.about.in();
 				});
 			}
-		} else if (v == 13) {
+		} else if (v == 1) {
 			if (this.state.home) {
 				this.setState({ write: true, about: false }, () => {
 					this.refs.home.out();
