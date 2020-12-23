@@ -51,6 +51,11 @@ export default class main extends React.Component {
 					$('html, body').stop();
 				});
 
+				TouchEvent.add('.btn-container', () => {
+					TouchEvent.remove('.btn-container');
+					root.next_poetry_debug();
+				});
+
 				if (Motion.ready) {
 					Motion.disable = true;
 					Motion.addEvent(Sensor_g, (e) => {
@@ -206,6 +211,9 @@ export default class main extends React.Component {
 		$('html, body').stop();
 		if (this.clipboard) this.clipboard.destroy();
 		if (Motion.ready) Motion.destory();
+
+		TouchEvent.remove('#article');
+		TouchEvent.remove('.btn-container');
 	}
 
 	append_body() {
@@ -287,7 +295,10 @@ export default class main extends React.Component {
 
 	next_poetry_debug() {
 		if (!Motion.ready) Hash.removeAndGo('id');
-		else this.next_poetry();
+		else {
+			Motion.disable = true;
+			this.next_poetry();
+		}
 	}
 
 	render() {
@@ -307,7 +318,7 @@ export default class main extends React.Component {
 					<div className='line' onClick={this.line_share.bind(this)}></div>
 					<div className='link'></div>
 				</div>
-				<div ref='btn' onClick={this.next_poetry_debug.bind(this)} className='btn-container'>
+				<div ref='btn' className='btn-container'>
 					<div className='corner'>
 						<div></div>
 						<div></div>
